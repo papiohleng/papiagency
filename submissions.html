@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Papi Agency Submissions</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0f0f14;
+            --bg-secondary: #1a1a24;
+            --bg-card: #22222e;
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.7);
+            --text-muted: rgba(255, 255, 255, 0.5);
+            --accent-primary: #00d4aa;
+            --accent-secondary: #667eea;
+            --border-color: rgba(255, 255, 255, 0.1);
+            --success-color: #00d4aa;
+            --warning-color: #f59e0b;
+            --error-color: #ef4444;
+            --info-color: #3b82f6;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            background: var(--bg-secondary);
+            padding: 20px 40px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, var(--accent-secondary), #764ba2);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1rem;
+        }
+
+        .logo-text {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .page-title {
+            color: var(--text-secondary);
+            font-weight: 400;
+            padding-left: 20px;
+            border-left: 1px solid var(--border-color);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .refresh-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .refresh-btn:hover {
+            background: var(--accent-primary);
+            color: #0a0a0f;
+        }
+
+        .refresh-btn svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        /* Stats Bar */
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 30px 40px;
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            padding: 20px;
+            border-radius: 15px;
+            border: 1px solid var(--border-color);
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            margin-bottom: 8px;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent-primary);
+        }
+
+        .stat-value.warning {
+            color: var(--warning-color);
+        }
+
+        .stat-value.info {
+            color: var(--info-color);
+        }
+
+        /* Filters */
+        .filters {
+            padding: 20px 40px;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 300px;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 16px 12px 45px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+        }
+
+        .search-box svg {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            stroke: var(--text-muted);
+        }
+
+        .filter-select {
+            padding: 12px 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            cursor: pointer;
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+        }
+
+        /* Table Container */
+        .table-container {
+            padding: 0 40px 40px;
+            overflow-x: auto;
+        }
+
+        .submissions-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--bg-card);
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .submissions-table th {
+            background: var(--bg-secondary);
+            padding: 16px 20px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .submissions-table td {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-primary);
+            font-size: 0.9rem;
+        }
+
+        .submissions-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .submissions-table tr:hover td {
+            background: rgba(0, 212, 170, 0.05);
+        }
+
+        /* Status Badge */
+        .status-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .status-badge.new {
+            background: rgba(0, 212, 170, 0.2);
+            color: var(--success-color);
+        }
+
+        .status-badge.in-progress {
+            background: rgba(59, 130, 246, 0.2);
+            color: var(--info-color);
+        }
+
+        .status-badge.pending {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--warning-color);
+        }
+
+        .status-badge.completed {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+        }
+
+        /* Links */
+        .link-btn {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            padding: 6px 12px;
+            border-radius: 6px;
+            color: var(--accent-primary);
+            text-decoration: none;
+            font-size: 0.8rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s ease;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+
+        .link-btn:hover {
+            background: var(--accent-primary);
+            color: #0a0a0f;
+        }
+
+        .link-btn svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        /* Services List */
+        .services-list {
+            max-width: 250px;
+        }
+
+        .service-tag {
+            display: inline-block;
+            background: rgba(102, 126, 234, 0.2);
+            color: var(--accent-secondary);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            margin: 2px;
+        }
+
+        /* Amount */
+        .amount {
+            font-weight: 700;
+            color: var(--accent-primary);
+        }
+
+        /* Loading & Empty States */
+        .loading-state,
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-secondary);
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid var(--border-color);
+            border-top-color: var(--accent-primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .empty-state svg {
+            width: 80px;
+            height: 80px;
+            stroke: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        .modal {
+            background: var(--bg-secondary);
+            border-radius: 20px;
+            max-width: 800px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            border: 1px solid var(--border-color);
+        }
+
+        .modal-header {
+            padding: 25px 30px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            background: var(--bg-secondary);
+        }
+
+        .modal-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .modal-close {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-primary);
+        }
+
+        .modal-close:hover {
+            background: var(--error-color);
+        }
+
+        .modal-body {
+            padding: 30px;
+        }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .detail-item {
+            background: var(--bg-card);
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .detail-item.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .detail-label {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            margin-bottom: 5px;
+        }
+
+        .detail-value {
+            color: var(--text-primary);
+            font-size: 1rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header {
+                padding: 15px 20px;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .stats-bar {
+                padding: 20px;
+            }
+
+            .filters {
+                padding: 15px 20px;
+            }
+
+            .search-box {
+                min-width: 100%;
+            }
+
+            .table-container {
+                padding: 0 20px 20px;
+            }
+
+            .detail-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-left">
+            <div class="logo">
+                <div class="logo-icon">PA</div>
+                <span class="logo-text">Papi Agency</span>
+            </div>
+            <span class="page-title">Submissions Dashboard</span>
+        </div>
+        <div class="header-right">
+            <button class="refresh-btn" onclick="fetchSubmissions()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="23 4 23 10 17 10"></polyline>
+                    <polyline points="1 20 1 14 7 14"></polyline>
+                    <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+                </svg>
+                Refresh
+            </button>
+        </div>
+    </header>
+
+    <!-- Stats Bar -->
+    <div class="stats-bar">
+        <div class="stat-card">
+            <div class="stat-label">Total Submissions</div>
+            <div class="stat-value" id="totalCount">0</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">New Submissions</div>
+            <div class="stat-value" id="newCount">0</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">Total Revenue (USD)</div>
+            <div class="stat-value info" id="totalRevenue">$0</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">Pending Payment</div>
+            <div class="stat-value warning" id="pendingCount">0</div>
+        </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="filters">
+        <div class="search-box">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="text" id="searchInput" placeholder="Search by name, email, reference..." oninput="filterSubmissions()">
+        </div>
+        <select class="filter-select" id="statusFilter" onchange="filterSubmissions()">
+            <option value="">All Status</option>
+            <option value="new">New</option>
+            <option value="in-progress">In Progress</option>
+            <option value="pending">Pending</option>
+            <option value="completed">Completed</option>
+        </select>
+    </div>
+
+    <!-- Table Container -->
+    <div class="table-container">
+        <div id="loadingState" class="loading-state">
+            <div class="loading-spinner"></div>
+            <p>Loading submissions...</p>
+        </div>
+
+        <div id="emptyState" class="empty-state" style="display: none;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="16" y1="13" x2="8" y2="13"></line>
+                <line x1="16" y1="17" x2="8" y2="17"></line>
+            </svg>
+            <p>No submissions found</p>
+        </div>
+
+        <table class="submissions-table" id="submissionsTable" style="display: none;">
+            <thead>
+                <tr>
+                    <th>Reference</th>
+                    <th>Date</th>
+                    <th>Client</th>
+                    <th>Services</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                    <th>Files</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+        </table>
+    </div>
+
+    <!-- Detail Modal -->
+    <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+        <div class="modal" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalTitle">Submission Details</h2>
+                <button class="modal-close" onclick="closeModal()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody"></div>
+        </div>
+    </div>
+
+    <script>
+        // Configuration - Replace with your deployed Google Apps Script URL
+        const API_URL = 'https://script.google.com/macros/s/AKfycbxJ_o9Bgqb-PA_-yqiqidV7nnpkuWcqYJEneh4j0_q7VJH_9kw9mmLYGP-0MzhLXfwltA/exec';
+        
+        let allSubmissions = [];
+
+        // Fetch submissions on load
+        document.addEventListener('DOMContentLoaded', fetchSubmissions);
+
+        async function fetchSubmissions() {
+            const loadingState = document.getElementById('loadingState');
+            const emptyState = document.getElementById('emptyState');
+            const table = document.getElementById('submissionsTable');
+
+            loadingState.style.display = 'block';
+            emptyState.style.display = 'none';
+            table.style.display = 'none';
+
+            try {
+                const response = await fetch(`${API_URL}?action=getSubmissions`);
+                const result = await response.json();
+
+                if (result.success) {
+                    allSubmissions = result.data;
+                    updateStats();
+                    renderTable(allSubmissions);
+                } else {
+                    throw new Error(result.error || 'Failed to fetch data');
+                }
+            } catch (error) {
+                console.error('Error fetching submissions:', error);
+                loadingState.innerHTML = `<p style="color: var(--error-color);">Error loading data: ${error.message}</p>`;
+            }
+        }
+
+        function updateStats() {
+            document.getElementById('totalCount').textContent = allSubmissions.length;
+            document.getElementById('newCount').textContent = allSubmissions.filter(s => s.status?.toLowerCase() === 'new').length;
+            document.getElementById('pendingCount').textContent = allSubmissions.filter(s => s.status?.toLowerCase() === 'pending').length;
+            
+            const totalRevenue = allSubmissions.reduce((sum, s) => sum + (parseFloat(s.totalUSD) || 0), 0);
+            document.getElementById('totalRevenue').textContent = `$${totalRevenue.toLocaleString()}`;
+        }
+
+        function renderTable(data) {
+            const loadingState = document.getElementById('loadingState');
+            const emptyState = document.getElementById('emptyState');
+            const table = document.getElementById('submissionsTable');
+            const tableBody = document.getElementById('tableBody');
+
+            loadingState.style.display = 'none';
+
+            if (data.length === 0) {
+                emptyState.style.display = 'block';
+                table.style.display = 'none';
+                return;
+            }
+
+            emptyState.style.display = 'none';
+            table.style.display = 'table';
+
+            tableBody.innerHTML = data.map(submission => {
+                const date = new Date(submission.timestamp).toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric'
+                });
+
+                const services = submission.servicesList?.split(', ').slice(0, 3).map(s => 
+                    `<span class="service-tag">${s}</span>`
+                ).join('') || 'N/A';
+
+                const statusClass = (submission.status || 'new').toLowerCase().replace(' ', '-');
+
+                const fileLinks = [];
+                if (submission.file1Link) fileLinks.push(`<a href="${submission.file1Link}" target="_blank" class="link-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>1</a>`);
+                if (submission.file2Link) fileLinks.push(`<a href="${submission.file2Link}" target="_blank" class="link-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>2</a>`);
+                if (submission.file3Link) fileLinks.push(`<a href="${submission.file3Link}" target="_blank" class="link-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>3</a>`);
+
+                return `
+                    <tr>
+                        <td><strong>${submission.reference}</strong></td>
+                        <td>${date}</td>
+                        <td>
+                            <div><strong>${submission.clientName}</strong></div>
+                            <div style="color: var(--text-muted); font-size: 0.85rem;">${submission.email}</div>
+                        </td>
+                        <td class="services-list">${services}${submission.servicesList?.split(', ').length > 3 ? `<span class="service-tag">+${submission.servicesList.split(', ').length - 3}</span>` : ''}</td>
+                        <td class="amount">${submission.totalLocal}</td>
+                        <td><span class="status-badge ${statusClass}">${submission.status || 'New'}</span></td>
+                        <td>${fileLinks.join('') || '-'}</td>
+                        <td>
+                            <button class="link-btn" onclick='showDetails(${JSON.stringify(submission).replace(/'/g, "\\'")})'>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                View
+                            </button>
+                            ${submission.folderLink ? `<a href="${submission.folderLink}" target="_blank" class="link-btn">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+                                Folder
+                            </a>` : ''}
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function filterSubmissions() {
+            const search = document.getElementById('searchInput').value.toLowerCase();
+            const status = document.getElementById('statusFilter').value.toLowerCase();
+
+            let filtered = allSubmissions;
+
+            if (search) {
+                filtered = filtered.filter(s => 
+                    s.reference?.toLowerCase().includes(search) ||
+                    s.clientName?.toLowerCase().includes(search) ||
+                    s.email?.toLowerCase().includes(search) ||
+                    s.company?.toLowerCase().includes(search)
+                );
+            }
+
+            if (status) {
+                filtered = filtered.filter(s => 
+                    (s.status || 'new').toLowerCase() === status
+                );
+            }
+
+            renderTable(filtered);
+        }
+
+        function showDetails(submission) {
+            const modal = document.getElementById('modalOverlay');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalBody = document.getElementById('modalBody');
+
+            modalTitle.textContent = `Submission: ${submission.reference}`;
+
+            const services = submission.services || [];
+            const servicesHtml = services.map(s => 
+                `<div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--border-color);">
+                    <span>${s.name} <small style="color: var(--text-muted);">(${s.category})</small></span>
+                    <span style="color: var(--accent-primary); font-weight: 600;">${submission.currency === 'USD' ? '$' : ''}${s.priceConverted?.toLocaleString() || s.priceUSD?.toLocaleString()}</span>
+                </div>`
+            ).join('');
+
+            modalBody.innerHTML = `
+                <div class="detail-grid">
+                    <div class="detail-item">
+                        <div class="detail-label">Client Name</div>
+                        <div class="detail-value">${submission.clientName}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Company</div>
+                        <div class="detail-value">${submission.company}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Email</div>
+                        <div class="detail-value"><a href="mailto:${submission.email}" style="color: var(--accent-primary);">${submission.email}</a></div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Phone</div>
+                        <div class="detail-value"><a href="tel:${submission.phone}" style="color: var(--accent-primary);">${submission.phone}</a></div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Country / Currency</div>
+                        <div class="detail-value">${submission.country} / ${submission.currency}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Payment Method</div>
+                        <div class="detail-value">${submission.paymentMethod}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Completion Date</div>
+                        <div class="detail-value">${submission.completionDate} (${submission.daysUntilDue} days)</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Budget Range</div>
+                        <div class="detail-value">${submission.budget}</div>
+                    </div>
+                    <div class="detail-item full-width">
+                        <div class="detail-label">Selected Services</div>
+                        <div class="detail-value">${servicesHtml || 'No services selected'}</div>
+                    </div>
+                    <div class="detail-item full-width">
+                        <div class="detail-label">Total Amount</div>
+                        <div class="detail-value" style="font-size: 1.5rem; color: var(--accent-primary); font-weight: 700;">${submission.totalLocal} <small style="color: var(--text-muted);">($${submission.totalUSD} USD)</small></div>
+                    </div>
+                    <div class="detail-item full-width">
+                        <div class="detail-label">Project Description</div>
+                        <div class="detail-value">${submission.projectDescription}</div>
+                    </div>
+                    ${submission.file1Link || submission.file2Link || submission.file3Link ? `
+                    <div class="detail-item full-width">
+                        <div class="detail-label">Attached Files</div>
+                        <div class="detail-value">
+                            ${submission.file1Link ? `<a href="${submission.file1Link}" target="_blank" class="link-btn">File 1</a>${submission.file1Comment ? `<span style="color: var(--text-muted); font-size: 0.85rem; margin-left: 10px;">${submission.file1Comment}</span>` : ''}<br>` : ''}
+                            ${submission.file2Link ? `<a href="${submission.file2Link}" target="_blank" class="link-btn">File 2</a>${submission.file2Comment ? `<span style="color: var(--text-muted); font-size: 0.85rem; margin-left: 10px;">${submission.file2Comment}</span>` : ''}<br>` : ''}
+                            ${submission.file3Link ? `<a href="${submission.file3Link}" target="_blank" class="link-btn">File 3</a>${submission.file3Comment ? `<span style="color: var(--text-muted); font-size: 0.85rem; margin-left: 10px;">${submission.file3Comment}</span>` : ''}` : ''}
+                        </div>
+                    </div>
+                    ` : ''}
+                </div>
+            `;
+
+            modal.classList.add('show');
+        }
+
+        function closeModal(event) {
+            if (!event || event.target === document.getElementById('modalOverlay')) {
+                document.getElementById('modalOverlay').classList.remove('show');
+            }
+        }
+
+        // Close modal on Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeModal();
+        });
+    </script>
+</body>
+</html>

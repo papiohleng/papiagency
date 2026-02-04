@@ -1,0 +1,1849 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Service Request | Papi Agency</title>
+    <meta name="description" content="Professional SMMA services request form - Web Development, SEO, Content Creation, Video Editing and more">
+    <base target="_top">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-card: rgba(255, 255, 255, 0.03);
+            --bg-card-hover: rgba(255, 255, 255, 0.06);
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.7);
+            --text-muted: rgba(255, 255, 255, 0.5);
+            --accent-primary: #00d4aa;
+            --accent-secondary: #667eea;
+            --accent-tertiary: #764ba2;
+            --border-color: rgba(255, 255, 255, 0.1);
+            --success-color: #00d4aa;
+            --warning-color: #f59e0b;
+            --error-color: #ef4444;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        .light-mode {
+            --bg-primary: #f8fafc;
+            --bg-secondary: #ffffff;
+            --bg-card: rgba(0, 0, 0, 0.02);
+            --bg-card-hover: rgba(0, 0, 0, 0.05);
+            --text-primary: #1e293b;
+            --text-secondary: rgba(30, 41, 59, 0.8);
+            --text-muted: rgba(30, 41, 59, 0.5);
+            --border-color: rgba(0, 0, 0, 0.1);
+            --glass-bg: rgba(255, 255, 255, 0.8);
+            --glass-border: rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        /* Galaxy Background */
+        .galaxy-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 50%, #16213e 100%);
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .light-mode .galaxy-bg {
+            background: linear-gradient(135deg, #e0e7ff 0%, #f0f4ff 50%, #e8f4f8 100%);
+        }
+
+        .stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle var(--duration) ease-in-out infinite;
+        }
+
+        .light-mode .star {
+            background: rgba(102, 126, 234, 0.3);
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        .nebula {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.15;
+        }
+
+        .nebula-1 {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, #667eea 0%, transparent 70%);
+            top: -200px;
+            right: -200px;
+        }
+
+        .nebula-2 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, #764ba2 0%, transparent 70%);
+            bottom: -150px;
+            left: -150px;
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            background: var(--accent-primary);
+            transform: scale(1.1);
+        }
+
+        .theme-toggle svg {
+            width: 24px;
+            height: 24px;
+            stroke: var(--text-primary);
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .theme-toggle:hover svg { stroke: #0a0a0f; }
+        .light-mode .sun-icon { display: none; }
+        .light-mode .moon-icon { display: block; }
+        .moon-icon { display: none; }
+        .sun-icon { display: block; }
+
+        /* Main Container */
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 80px 20px 40px;
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 40px;
+            align-items: start;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            grid-column: 1 / -1;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 50%, var(--accent-tertiary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+        }
+
+        .header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Form Container */
+        .form-container {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        /* Section Cards */
+        .section-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.8s ease-out backwards;
+        }
+
+        .section-card:hover {
+            background: var(--bg-card-hover);
+            border-color: rgba(0, 212, 170, 0.3);
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--text-primary);
+        }
+
+        .section-title svg {
+            width: 28px;
+            height: 28px;
+            stroke: var(--accent-primary);
+        }
+
+        /* Form Elements */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 14px 16px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 20px rgba(0, 212, 170, 0.2);
+        }
+
+        .form-group input.invalid {
+            border-color: var(--error-color);
+        }
+
+        .error-message {
+            color: var(--error-color);
+            font-size: 0.85rem;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        .currency-info {
+            font-size: 0.85rem;
+            color: var(--accent-primary);
+            margin-top: 5px;
+            padding: 8px 12px;
+            background: rgba(0, 212, 170, 0.1);
+            border-radius: 8px;
+            display: none;
+        }
+
+        .currency-info.show {
+            display: block;
+        }
+
+        /* Services Grid */
+        .services-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .category-section {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid var(--border-color);
+        }
+
+        .category-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--accent-secondary);
+            margin-bottom: 15px;
+        }
+
+        .category-services {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 12px;
+        }
+
+        .service-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .service-card:hover {
+            border-color: var(--accent-primary);
+            background: var(--bg-card-hover);
+            transform: translateY(-2px);
+        }
+
+        .service-card.selected {
+            border-color: var(--accent-primary);
+            background: rgba(0, 212, 170, 0.1);
+            box-shadow: 0 0 25px rgba(0, 212, 170, 0.2);
+        }
+
+        .service-name {
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+        }
+
+        .service-price {
+            display: inline-flex;
+            background: linear-gradient(135deg, var(--accent-primary) 0%, #00b894 100%);
+            color: #0a0a0f;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            width: fit-content;
+        }
+
+        .service-desc {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .service-checkbox {
+            position: absolute;
+            bottom: 12px;
+            right: 12px;
+            width: 24px;
+            height: 24px;
+            border: 2px solid var(--border-color);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-card);
+        }
+
+        .service-card.selected .service-checkbox {
+            background: var(--accent-primary);
+            border-color: var(--accent-primary);
+        }
+
+        .service-checkbox svg {
+            width: 14px;
+            height: 14px;
+            stroke: #0a0a0f;
+            stroke-width: 3;
+            opacity: 0;
+        }
+
+        .service-card.selected .service-checkbox svg {
+            opacity: 1;
+        }
+
+        /* File Upload */
+        .file-upload-section {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .file-upload-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .file-upload-item label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .file-input-wrapper input[type="file"] {
+            width: 100%;
+            padding: 12px;
+            background: var(--bg-secondary);
+            border: 2px dashed var(--border-color);
+            border-radius: 10px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            margin-bottom: 12px;
+        }
+
+        .file-comment {
+            width: 100%;
+            padding: 12px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            resize: vertical;
+            min-height: 60px;
+        }
+
+        /* Payment Options */
+        .payment-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .payment-option {
+            background: var(--bg-card);
+            border: 2px solid var(--border-color);
+            border-radius: 16px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .payment-option:hover {
+            border-color: var(--accent-secondary);
+        }
+
+        .payment-option.selected {
+            border-color: var(--accent-primary);
+            background: rgba(0, 212, 170, 0.1);
+        }
+
+        .payment-option input {
+            display: none;
+        }
+
+        .payment-icon {
+            width: 50px;
+            height: 50px;
+            margin: 0 auto 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--glass-bg);
+            border-radius: 12px;
+        }
+
+        .payment-icon svg {
+            width: 28px;
+            height: 28px;
+            stroke: var(--accent-primary);
+        }
+
+        .payment-title {
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .payment-desc {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* Quotation Sidebar */
+        .quotation-sidebar {
+            position: sticky;
+            top: 80px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 25px;
+        }
+
+        .quote-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .quote-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+.quote-count {
+    background: red; /* Red background */
+    color: white; /* White text */
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+        .quote-items {
+            max-height: 350px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+        }
+
+        .quote-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .quote-item-name {
+            font-size: 0.9rem;
+            color: var(--text-primary);
+        }
+
+        .quote-item-price {
+            font-weight: 600;
+            color: var(--accent-primary);
+        }
+
+        .quote-empty {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-muted);
+        }
+
+        .quote-empty svg {
+            width: 50px;
+            height: 50px;
+            stroke: var(--text-muted);
+            margin-bottom: 15px;
+        }
+
+        .quote-total {
+            display: flex;
+            justify-content: space-between;
+            padding-top: 15px;
+            border-top: 2px solid var(--accent-primary);
+            margin-top: 15px;
+        }
+
+        .quote-total-label {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .quote-total-amount {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--accent-primary);
+        }
+
+        .currency-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            text-align: right;
+            margin-top: 5px;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .submit-btn, .download-btn {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, var(--accent-primary) 0%, #00b894 100%);
+            color: #0a0a0f;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 212, 170, 0.4);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .download-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+        }
+
+        .download-btn:hover {
+            border-color: var(--accent-secondary);
+        }
+
+/* Floating Cart (Mobile) */
+.floating-cart {
+    display: block; /* Ensure the button is always visible */
+    position: fixed;
+    bottom: 750px;
+    right: 85px;
+    z-index: 998;
+}
+
+
+        .cart-btn {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-primary) 0%, #00b894 100%);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 40px rgba(0, 212, 170, 0.5);
+            position: fixed;
+            animation: cartPulse 2s ease-in-out infinite;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .cart-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 50px rgba(0, 212, 170, 0.6);
+        }
+
+        @keyframes cartPulse {
+            0%, 100% { box-shadow: 0 10px 40px rgba(0, 212, 170, 0.5); }
+            50% { box-shadow: 0 10px 50px rgba(0, 212, 170, 0.8); }
+        }
+
+        @keyframes cartExpand {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        .cart-btn.item-added {
+            animation: cartExpand 0.5s ease-out;
+        }
+
+        .cart-btn svg {
+            width: 28px;
+            height: 28px;
+            stroke: #0a0a0f;
+        }
+
+        .cart-btn .cart-total {
+            font-size: 0.65rem;
+            font-weight: 800;
+            color: #0a6a0f;
+            margin-top: 2px;
+        }
+
+/* Cart Badge */
+.cart-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: #FFD700; /* Gold color */
+    color: white;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    font-weight: 800;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+/* Cart Badge when item is added */
+.cart-badge.has-items {
+    background: red; /* Default red color */
+    animation: badgePop 0.5s ease-out, colorChange 0.5s ease-out; /* Added color change animation */
+}
+
+/* Keyframes for scaling the cart badge */
+@keyframes badgePop {
+    0% { 
+        transform: scale(1); 
+    }
+    50% { 
+        transform: scale(1.3); /* Scale up */
+    }
+    100% { 
+        transform: scale(1); /* Scale back to normal */
+    }
+}
+
+/* Keyframes for changing the background color temporarily */
+@keyframes colorChange {
+    0% {
+        background: red; /* Starting color */
+    }
+    50% {
+        background: #007BFF; /* Change to blue during scale */
+    }
+    100% {
+        background: red; /* Revert back to red */
+    }
+}
+
+/* Ensuring the color change animation runs every time the class is added */
+.cart-badge {
+    animation: none; /* Ensure no lingering animation */
+}
+
+.cart-badge.has-items {
+    animation: badgePop 0.5s ease-out, colorChange 0.5s ease-out;
+}
+
+        /* Cart Panel (Mobile) */
+        .cart-panel {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 70vh;
+            background: var(--bg-secondary);
+            border-radius: 30px 30px 0 0;
+            z-index: 1001;
+            transform: translateY(100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 -10px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .cart-panel.open {
+            transform: translateY(0);
+        }
+
+        .cart-panel-header {
+            padding: 20px 25px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .cart-panel-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .cart-close-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cart-close-btn svg {
+            width: 20px;
+            height: 20px;
+            stroke: var(--text-primary);
+        }
+
+        .cart-panel-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px 25px;
+        }
+
+        .cart-panel-footer {
+            padding: 20px 25px;
+            border-top: 1px solid var(--border-color);
+            background: var(--bg-card);
+        }
+
+        .cart-panel-total {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .cart-panel-total-label {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .cart-panel-total-amount {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--accent-primary);
+        }
+
+        .cart-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .cart-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Success Message */
+        .success-message {
+            display: none;
+            text-align: center;
+            padding: 60px 30px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            grid-column: 1 / -1;
+        }
+
+        .success-message.show {
+            display: block;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        .success-icon {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, var(--accent-primary) 0%, #00b894 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 30px;
+        }
+
+        .success-icon svg {
+            width: 50px;
+            height: 50px;
+            stroke: #0a0a0f;
+            stroke-width: 3;
+        }
+
+        .success-message h2 {
+            font-size: 2rem;
+            color: var(--text-primary);
+            margin-bottom: 15px;
+        }
+
+        .success-message p {
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+        }
+
+        .confirmation-ref {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-primary);
+            margin: 20px 0;
+            padding: 15px;
+            background: var(--bg-card);
+            border-radius: 12px;
+            display: inline-block;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .main-container {
+                grid-template-columns: 1fr;
+                padding-top: 80px;
+            }
+            .quotation-sidebar {
+                display: none;
+            }
+            .floating-cart {
+                display: block;
+            }
+            .header h1 {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            .category-services {
+                grid-template-columns: 1fr;
+            }
+            .payment-options {
+                grid-template-columns: 1fr;
+            }
+            .theme-toggle {
+                width: 45px;
+                height: 45px;
+            }
+            .service-card {
+                padding-bottom: 45px;
+            }
+            /* Make submit button smaller on mobile */
+            .submit-btn {
+                padding: 12px 16px;
+                font-size: 0.9rem;
+            }
+            .submit-btn svg {
+                width: 18px;
+                height: 18px;
+            }
+        }
+
+        .spinner {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Date Info */
+        .date-info {
+            margin-top: 10px;
+            padding: 12px;
+            background: rgba(0, 212, 170, 0.1);
+            border-radius: 10px;
+            border-left: 3px solid var(--accent-primary);
+            display: none;
+        }
+
+        .date-info.show {
+            display: block;
+        }
+
+        .date-info .days {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-primary);
+        }
+
+        .date-info .warning {
+            font-size: 0.8rem;
+            color: var(--warning-color);
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Galaxy Background -->
+    <div class="galaxy-bg">
+        <div class="stars" id="stars"></div>
+        <div class="nebula nebula-1"></div>
+        <div class="nebula nebula-2"></div>
+    </div>
+
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" title="Toggle Light/Dark Mode">
+        <svg class="sun-icon" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+        <svg class="moon-icon" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+    </button>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Header -->
+        <header class="header">
+            <h1>Service Request</h1>
+            <p>Select the services you need and we'll prepare a custom quote for your project</p>
+        </header>
+
+        <!-- Form Container -->
+        <div class="form-container">
+            <form id="serviceForm">
+                <!-- Client Information -->
+                <section class="section-card" id="client-section">
+                    <h2 class="section-title">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        Client Information
+                    </h2>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="clientName">Full Name</label>
+                            <input type="text" id="clientName" name="clientName" placeholder="John Doe">
+                        </div>
+                        <div class="form-group">
+                            <label for="companyName">Company Name</label>
+                            <input type="text" id="companyName" name="companyName" placeholder="Acme Inc.">
+                        </div>
+                        <div class="form-group">
+                            <label for="clientEmail">Email Address *</label>
+                            <input type="email" id="clientEmail" name="clientEmail" placeholder="john@example.com" required>
+                            <span class="error-message" id="emailError">Please enter a valid email address</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="clientPhone">Phone Number</label>
+                            <input type="tel" id="clientPhone" name="clientPhone" placeholder="+1 234 567 8900">
+                        </div>
+                        <div class="form-group">
+                            <label for="clientCountry">Country</label>
+                            <select id="clientCountry" name="clientCountry" onchange="updateCurrency()">
+                                <option value="US">United States</option>
+                                <option value="GB">United Kingdom</option>
+                                <option value="EU">European Union</option>
+                                <option value="ZA">South Africa</option>
+                                <option value="AU">Australia</option>
+                                <option value="CA">Canada</option>
+                                <option value="IN">India</option>
+                                <option value="NG">Nigeria</option>
+                                <option value="KE">Kenya</option>
+                                <option value="GH">Ghana</option>
+                                <option value="AE">UAE</option>
+                            </select>
+                            <div class="currency-info" id="currencyInfo"></div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Services Selection -->
+                <section class="section-card" id="services-section">
+                    <h2 class="section-title">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                            <rect x="3" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="14" width="7" height="7"></rect>
+                            <rect x="3" y="14" width="7" height="7"></rect>
+                        </svg>
+                        Select Services
+                    </h2>
+                    <div class="services-grid" id="servicesGrid"></div>
+                </section>
+
+                <!-- Project Details -->
+                <section class="section-card" id="project-section">
+                    <h2 class="section-title">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                        </svg>
+                        Project Details
+                    </h2>
+                    <div class="form-grid">
+                        <div class="form-group full-width">
+                            <label for="projectDescription">Project Description</label>
+                            <textarea id="projectDescription" name="projectDescription" rows="4" placeholder="Tell us about your project, goals, and any specific requirements..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="completionDate">Expected Completion Date</label>
+                            <input type="date" id="completionDate" name="completionDate" onchange="calculateDays()">
+                            <div class="date-info" id="dateInfo">
+                                <span class="days" id="daysLeft">0</span> days until deadline
+                                <div class="warning">* Timeline only valid with immediate payment</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="budget">Budget Range</label>
+                            <select id="budget" name="budget">
+                                <option value="">Select budget range</option>
+                                <option value="500-1000">$500 - $1,000</option>
+                                <option value="1000-2500">$1,000 - $2,500</option>
+                                <option value="2500-5000">$2,500 - $5,000</option>
+                                <option value="5000-10000">$5,000 - $10,000</option>
+                                <option value="10000+">$10,000+</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- File Uploads -->
+                    <div class="file-upload-section" style="margin-top: 25px;">
+                        <h3 style="font-size: 1rem; color: var(--text-secondary); margin-bottom: 15px;">Attach Files (Optional)</h3>
+                        
+                        <div class="file-upload-item">
+                            <label>File 1</label>
+                            <div class="file-input-wrapper">
+                                <input type="file" id="file1" name="file1" accept="*/*">
+                            </div>
+                            <textarea class="file-comment" id="fileComment1" name="fileComment1" placeholder="Add a comment about this file..."></textarea>
+                        </div>
+
+                        <div class="file-upload-item">
+                            <label>File 2</label>
+                            <div class="file-input-wrapper">
+                                <input type="file" id="file2" name="file2" accept="*/*">
+                            </div>
+                            <textarea class="file-comment" id="fileComment2" name="fileComment2" placeholder="Add a comment about this file..."></textarea>
+                        </div>
+
+                        <div class="file-upload-item">
+                            <label>File 3</label>
+                            <div class="file-input-wrapper">
+                                <input type="file" id="file3" name="file3" accept="*/*">
+                            </div>
+                            <textarea class="file-comment" id="fileComment3" name="fileComment3" placeholder="Add a comment about this file..."></textarea>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Payment Method -->
+                <section class="section-card" id="payment-section">
+                    <h2 class="section-title">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                            <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+                            <line x1="1" y1="10" x2="23" y2="10"></line>
+                        </svg>
+                        Payment Method
+                    </h2>
+                    <div class="payment-options">
+                        <label class="payment-option selected">
+                            <input type="radio" name="paymentMethod" value="bank" checked>
+                            <div class="payment-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                                    <rect x="3" y="8" width="18" height="12" rx="2"></rect>
+                                    <path d="M7 8V6a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2"></path>
+                                </svg>
+                            </div>
+                            <div class="payment-title">Bank Transfer</div>
+                            <div class="payment-desc">Secure wire transfer - No fees</div>
+                        </label>
+
+                        <label class="payment-option">
+                            <input type="radio" name="paymentMethod" value="paypal">
+                            <div class="payment-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                                    <path d="M7 11l5-5 5 5M7 17l5-5 5 5"></path>
+                                </svg>
+                            </div>
+                            <div class="payment-title">PayPal</div>
+                            <div class="payment-desc">Quick payments (~2.9% fee)</div>
+                        </label>
+
+                        <label class="payment-option">
+                            <input type="radio" name="paymentMethod" value="card">
+                            <div class="payment-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                                    <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+                                    <line x1="1" y1="10" x2="23" y2="10"></line>
+                                </svg>
+                            </div>
+                            <div class="payment-title">Credit/Debit Card</div>
+                            <div class="payment-desc">Via PayPal (no login required)</div>
+                        </label>
+
+                        <label class="payment-option">
+                            <input type="radio" name="paymentMethod" value="crypto">
+                            <div class="payment-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <path d="M9.5 9.5c0-1 .9-1.75 2-1.75h1.25c1.1 0 2 .75 2 1.75s-.9 1.75-2 1.75H11c-1.1 0-2 .75-2 1.75s.9 1.75 2 1.75h1.25c1.1 0 2-.75 2-1.75"></path>
+                                    <path d="M12 6v2m0 8v2"></path>
+                                </svg>
+                            </div>
+                            <div class="payment-title">Cryptocurrency</div>
+                            <div class="payment-desc">BTC, ETH, USDT accepted</div>
+                        </label>
+                    </div>
+
+                    <div style="margin-top: 25px; text-align: center;">
+                        <p style="color: var(--text-secondary); margin-bottom: 15px;">Ready to submit your service request?</p>
+                        <button type="button" class="submit-btn" onclick="handleSubmit()" style="max-width: 300px; margin: 0 auto;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                                <line x1="22" y1="2" x2="11" y2="13"></line>
+                                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                            </svg>
+                            Submit Request
+                        </button>
+                    </div>
+                </section>
+            </form>
+        </div>
+
+        <!-- Quotation Sidebar -->
+        <aside class="quotation-sidebar">
+            <div class="quote-header">
+                <h3 class="quote-title">Your Quote</h3>
+                <span class="quote-count" id="quoteCount">0 items</span>
+            </div>
+            <div class="quote-items" id="quoteItems">
+                <div class="quote-empty">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                        <circle cx="9" cy="21" r="1"></circle>
+                        <circle cx="20" cy="21" r="1"></circle>
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                    </svg>
+                    <p>No services selected yet</p>
+                </div>
+            </div>
+            <div class="quote-total">
+                <span class="quote-total-label">Total</span>
+                <span class="quote-total-amount" id="quoteTotal">$0</span>
+            </div>
+            <div class="currency-label" id="currencyLabel">USD - US Dollar</div>
+            <div class="action-buttons">
+                <button type="button" class="submit-btn" onclick="handleSubmit()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                        <line x1="22" y1="2" x2="11" y2="13"></line>
+                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                    </svg>
+                    Submit Request
+                </button>
+            </div>
+        </aside>
+
+        <!-- Success Message -->
+        <div class="success-message" id="successMessage">
+            <div class="success-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+            </div>
+            <h2>Request Submitted!</h2>
+            <p>Thank you for your service request. We'll review it and get back to you shortly.</p>
+            <div class="confirmation-ref" id="confirmationRef">Reference: 251223PAPI</div>
+<p style="color: var(--text-muted); font-size: 0.9rem;">
+    A quote PDF with your reference number and payment details has been sent to your email address.
+</p>
+
+<!-- PayPal Link Below the Message -->
+<p>
+    <a href="https://www.paypal.me/papiagency" target="_blank" style="color: #0070ba; font-size: 1rem; font-weight: bold; text-decoration: none;">
+        Click here to pay via PayPal
+    </a>
+</p>
+
+            <button type="button" class="submit-btn" onclick="window.location.reload()" style="margin-top: 25px; max-width: 250px;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                    <polyline points="1 4 1 10 7 10"></polyline>
+                    <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+                </svg>
+                Submit Another Request
+            </button>
+        </div>
+    </div>
+
+    <!-- Floating Cart (Mobile) -->
+    <div class="floating-cart" id="floatingCart">
+        <button class="cart-btn" onclick="toggleCartPanel()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="9" cy="21" r="1"></circle>
+                <circle cx="20" cy="21" r="1"></circle>
+                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+            </svg>
+            <span class="cart-total" id="cartTotalMobile">$0</span>
+            <span class="cart-badge" id="cartBadge">0</span>
+        </button>
+    </div>
+
+    <!-- Cart Overlay -->
+    <div class="cart-overlay" id="cartOverlay" onclick="closeCartPanel()"></div>
+
+    <!-- Cart Panel (Mobile) -->
+    <div class="cart-panel" id="cartPanel">
+        <div class="cart-panel-header">
+            <h3 class="cart-panel-title">Your Quote</h3>
+            <button class="cart-close-btn" onclick="closeCartPanel()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+        <div class="cart-panel-content" id="cartPanelContent"></div>
+        <div class="cart-panel-footer">
+            <div class="cart-panel-total">
+                <span class="cart-panel-total-label">Total</span>
+                <span class="cart-panel-total-amount" id="cartPanelTotal">$0</span>
+            </div>
+            <div class="currency-label" id="cartCurrencyLabel">USD - US Dollar</div>
+            <div id="cartDueDate" style="margin: 10px 0; padding: 10px; background: rgba(0, 212, 170, 0.1); border-radius: 8px; display: none;">
+                <span style="color: var(--text-secondary); font-size: 0.85rem;">Due Date: </span>
+                <span id="cartDueDateValue" style="color: var(--accent-primary); font-weight: 600;"></span>
+            </div>
+            <div class="action-buttons">
+                <button type="button" class="submit-btn" onclick="handleSubmit(); closeCartPanel();">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                        <line x1="22" y1="2" x2="11" y2="13"></line>
+                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                    </svg>
+                    Submit Request
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Services Data
+        const services = {
+            'Design': [
+                { id: 'logo', name: 'Logo Design', price: 150, desc: 'Professional brand identity design' },
+                { id: 'brand', name: 'Brand Identity Package', price: 500, desc: 'Complete visual brand system' },
+                { id: 'ui', name: 'UI/UX Design', price: 800, desc: 'User interface and experience design' },
+                { id: 'graphics', name: 'Social Media Graphics', price: 200, desc: 'Custom graphics for all platforms' }
+            ],
+            'Web': [
+                { id: 'landing', name: 'Landing Page', price: 400, desc: 'High-converting single page website' },
+                { id: 'website', name: 'Full Website (5-10 pages)', price: 1200, desc: 'Professional multi-page website' },
+                { id: 'ecommerce', name: 'E-commerce Store', price: 2000, desc: 'Full online store with payments' },
+                { id: 'webapp', name: 'Web Application', price: 3500, desc: 'Custom web application development' }
+            ],
+            'Development': [
+                { id: 'api', name: 'API Development', price: 1500, desc: 'Custom API and backend services' },
+                { id: 'mobile', name: 'Mobile App', price: 5000, desc: 'iOS and Android application' },
+                { id: 'automation', name: 'Business Automation', price: 800, desc: 'Workflow and process automation' },
+                { id: 'integration', name: 'System Integration', price: 1000, desc: 'Connect your business tools' }
+            ],
+            'Marketing': [
+                { id: 'seo', name: 'SEO Optimization', price: 600, desc: 'Improve search engine rankings' },
+                { id: 'ads', name: 'Paid Advertising Setup', price: 400, desc: 'Google & social media ads' },
+                { id: 'email', name: 'Email Marketing', price: 350, desc: 'Email campaigns and automation' },
+                { id: 'social', name: 'Social Media Management', price: 500, desc: 'Monthly content and engagement' }
+            ],
+            'Media': [
+                { id: 'video', name: 'Video Editing', price: 300, desc: 'Professional video production' },
+                { id: 'photo', name: 'Photography', price: 250, desc: 'Product and brand photography' },
+                { id: 'animation', name: 'Motion Graphics', price: 600, desc: 'Animated videos and graphics' },
+                { id: 'podcast', name: 'Podcast Production', price: 400, desc: 'Audio editing and production' }
+            ],
+            'Business': [
+                { id: 'consulting', name: 'Digital Strategy Consulting', price: 1000, desc: 'Expert business guidance' },
+                { id: 'analytics', name: 'Analytics Setup', price: 300, desc: 'Track and measure performance' },
+                { id: 'training', name: 'Team Training', price: 500, desc: 'Digital skills workshops' },
+                { id: 'support', name: 'Ongoing Support (Monthly)', price: 400, desc: 'Dedicated support and maintenance' }
+            ]
+        };
+
+        const currencies = {
+            'US': { code: 'USD', symbol: '$', rate: 1, name: 'US Dollar' },
+            'GB': { code: 'GBP', symbol: '£', rate: 0.79, name: 'British Pound' },
+            'EU': { code: 'EUR', symbol: '€', rate: 0.92, name: 'Euro' },
+            'ZA': { code: 'ZAR', symbol: 'R', rate: 18.5, name: 'South African Rand' },
+            'AU': { code: 'AUD', symbol: 'A$', rate: 1.53, name: 'Australian Dollar' },
+            'CA': { code: 'CAD', symbol: 'C$', rate: 1.36, name: 'Canadian Dollar' },
+            'IN': { code: 'INR', symbol: '₹', rate: 83.12, name: 'Indian Rupee' },
+            'NG': { code: 'NGN', symbol: '₦', rate: 1550, name: 'Nigerian Naira' },
+            'KE': { code: 'KES', symbol: 'KSh', rate: 153, name: 'Kenyan Shilling' },
+            'GH': { code: 'GHS', symbol: 'GH₵', rate: 12.5, name: 'Ghanaian Cedi' },
+            'AE': { code: 'AED', symbol: 'د.إ', rate: 3.67, name: 'UAE Dirham' }
+        };
+
+        let selectedServices = new Set();
+        let currentCurrency = currencies['US'];
+        let cartPanelOpen = false;
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            createStars();
+            renderServices();
+            updateQuote();
+            setupPaymentOptions();
+            updateCurrencyInfo();
+        });
+
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.cssText = `
+                    left: ${Math.random() * 100}%;
+                    top: ${Math.random() * 100}%;
+                    width: ${Math.random() * 3 + 1}px;
+                    height: ${Math.random() * 3 + 1}px;
+                    --duration: ${Math.random() * 3 + 2}s;
+                    animation-delay: ${Math.random() * 3}s;
+                `;
+                starsContainer.appendChild(star);
+            }
+        }
+
+        function toggleTheme() {
+            document.body.classList.toggle('light-mode');
+        }
+
+        function updateCurrencyInfo() {
+            const currencyInfoEl = document.getElementById('currencyInfo');
+            if (currencyInfoEl) {
+                currencyInfoEl.innerHTML = `<strong>${currentCurrency.code}</strong> - ${currentCurrency.name}`;
+                currencyInfoEl.classList.add('show');
+            }
+        }
+
+        function updateCurrency() {
+            const country = document.getElementById('clientCountry').value;
+            currentCurrency = currencies[country] || currencies['US'];
+            updateCurrencyInfo();
+            renderServices();
+            updateQuote();
+        }
+
+        function renderServices() {
+            const grid = document.getElementById('servicesGrid');
+            grid.innerHTML = '';
+
+            for (const [category, items] of Object.entries(services)) {
+                const categoryDiv = document.createElement('div');
+                categoryDiv.className = 'category-section';
+                categoryDiv.innerHTML = `<h3 class="category-title">${category}</h3>`;
+
+                const servicesDiv = document.createElement('div');
+                servicesDiv.className = 'category-services';
+
+                items.forEach(service => {
+                    const convertedPrice = Math.round(service.price * currentCurrency.rate);
+                    const card = document.createElement('div');
+                    card.className = `service-card ${selectedServices.has(service.id) ? 'selected' : ''}`;
+                    card.onclick = () => toggleService(service.id);
+                    card.innerHTML = `
+                        <span class="service-name">${service.name}</span>
+                        <span class="service-price">${currentCurrency.symbol}${convertedPrice.toLocaleString()}</span>
+                        <p class="service-desc">${service.desc}</p>
+                        <div class="service-checkbox">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                    `;
+                    servicesDiv.appendChild(card);
+                });
+
+                categoryDiv.appendChild(servicesDiv);
+                grid.appendChild(categoryDiv);
+            }
+        }
+
+        function toggleService(serviceId) {
+            const cartBtn = document.querySelector('.cart-btn');
+            const cartBadge = document.getElementById('cartBadge');
+            
+            if (selectedServices.has(serviceId)) {
+                selectedServices.delete(serviceId);
+            } else {
+                selectedServices.add(serviceId);
+                if (cartBtn) {
+                    cartBtn.classList.remove('item-added');
+                    void cartBtn.offsetWidth;
+                    cartBtn.classList.add('item-added');
+                }
+            }
+            
+            if (cartBadge) {
+                if (selectedServices.size > 0) {
+                    cartBadge.classList.add('has-items');
+                } else {
+                    cartBadge.classList.remove('has-items');
+                }
+            }
+            
+            renderServices();
+            updateQuote();
+        }
+
+        function updateQuote() {
+            const quoteItems = document.getElementById('quoteItems');
+            const quoteCount = document.getElementById('quoteCount');
+            const quoteTotal = document.getElementById('quoteTotal');
+            const currencyLabel = document.getElementById('currencyLabel');
+            const cartBadge = document.getElementById('cartBadge');
+            const cartTotalMobile = document.getElementById('cartTotalMobile');
+            const cartPanelContent = document.getElementById('cartPanelContent');
+            const cartPanelTotal = document.getElementById('cartPanelTotal');
+            const cartCurrencyLabel = document.getElementById('cartCurrencyLabel');
+            const cartDueDate = document.getElementById('cartDueDate');
+            const cartDueDateValue = document.getElementById('cartDueDateValue');
+            const completionDateInput = document.getElementById('completionDate');
+
+            let total = 0;
+            let itemsHtml = '';
+
+            if (selectedServices.size === 0) {
+                itemsHtml = `
+                    <div class="quote-empty">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                            <circle cx="9" cy="21" r="1"></circle>
+                            <circle cx="20" cy="21" r="1"></circle>
+                            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                        </svg>
+                        <p>No services selected yet</p>
+                    </div>
+                `;
+            } else {
+                selectedServices.forEach(serviceId => {
+                    for (const [category, items] of Object.entries(services)) {
+                        const service = items.find(s => s.id === serviceId);
+                        if (service) {
+                            const convertedPrice = Math.round(service.price * currentCurrency.rate);
+                            total += service.price;
+                            itemsHtml += `
+                                <div class="quote-item">
+                                    <span class="quote-item-name">${service.name}</span>
+                                    <span class="quote-item-price">${currentCurrency.symbol}${convertedPrice.toLocaleString()}</span>
+                                </div>
+                            `;
+                        }
+                    }
+                });
+            }
+
+            const convertedTotal = Math.round(total * currentCurrency.rate);
+
+            quoteItems.innerHTML = itemsHtml;
+            quoteCount.textContent = `${selectedServices.size} item${selectedServices.size !== 1 ? 's' : ''}`;
+            quoteTotal.textContent = `${currentCurrency.symbol}${convertedTotal.toLocaleString()}`;
+            currencyLabel.textContent = `${currentCurrency.code} - ${currentCurrency.name}`;
+
+            // Mobile cart
+            cartBadge.textContent = selectedServices.size;
+            if (selectedServices.size > 0) {
+                cartBadge.classList.add('has-items');
+            } else {
+                cartBadge.classList.remove('has-items');
+            }
+            cartTotalMobile.textContent = `${currentCurrency.symbol}${convertedTotal.toLocaleString()}`;
+            cartPanelContent.innerHTML = itemsHtml;
+            cartPanelTotal.textContent = `${currentCurrency.symbol}${convertedTotal.toLocaleString()}`;
+            cartCurrencyLabel.textContent = `${currentCurrency.code} - ${currentCurrency.name}`;
+            
+            if (completionDateInput && completionDateInput.value && cartDueDate && cartDueDateValue) {
+                const dateObj = new Date(completionDateInput.value);
+                const formatted = dateObj.toLocaleDateString('en-US', { 
+                    weekday: 'short', 
+                    year: 'numeric', 
+                    month: 'short', 
+                    day: 'numeric' 
+                });
+                cartDueDateValue.textContent = formatted;
+                cartDueDate.style.display = 'block';
+            } else if (cartDueDate) {
+                cartDueDate.style.display = 'none';
+            }
+        }
+
+        function toggleCartPanel() {
+            cartPanelOpen = !cartPanelOpen;
+            document.getElementById('cartPanel').classList.toggle('open', cartPanelOpen);
+            document.getElementById('cartOverlay').classList.toggle('show', cartPanelOpen);
+            if (cartPanelOpen) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+            }
+
+            const completionDate = document.getElementById('completionDate').value;
+            const cartDueDateEl = document.getElementById('cartDueDate');
+            const cartDueDateValueEl = document.getElementById('cartDueDateValue');
+
+            if (completionDate) {
+                cartDueDateEl.style.display = 'block';
+                cartDueDateValueEl.textContent = new Date(completionDate).toLocaleDateString();
+            } else {
+                cartDueDateEl.style.display = 'none';
+            }
+        }
+
+        function closeCartPanel() {
+            cartPanelOpen = false;
+            document.getElementById('cartPanel').classList.remove('open');
+            document.getElementById('cartOverlay').classList.remove('show');
+            document.body.style.overflow = '';
+        }
+
+        function setupPaymentOptions() {
+            document.querySelectorAll('.payment-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    document.querySelectorAll('.payment-option').forEach(o => o.classList.remove('selected'));
+                    this.classList.add('selected');
+                });
+            });
+        }
+
+        function calculateDays() {
+            const dateInput = document.getElementById('completionDate');
+            const dateInfo = document.getElementById('dateInfo');
+            const daysLeft = document.getElementById('daysLeft');
+
+            if (dateInput.value) {
+                const selected = new Date(dateInput.value);
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+                const diff = Math.ceil((selected - today) / (1000 * 60 * 60 * 24));
+
+                daysLeft.textContent = diff;
+                dateInfo.classList.add('show');
+            } else {
+                dateInfo.classList.remove('show');
+            }
+            updateQuote();
+        }
+
+        function generateReferenceNumber() {
+            const now = new Date();
+            const yy = String(now.getFullYear()).slice(-2);
+            const mm = String(now.getMonth() + 1).padStart(2, '0');
+            const dd = String(now.getDate()).padStart(2, '0');
+
+            const companyName = document.getElementById('companyName').value.trim();
+            const clientName = document.getElementById('clientName').value.trim();
+            const nameSource = companyName || clientName || 'PAPI';
+            const nameCode = nameSource.replace(/[^a-zA-Z]/g, '').toUpperCase().substring(0, 4).padEnd(4, 'X');
+
+            return `${yy}${mm}${dd}${nameCode}`;
+        }
+
+        function fileToBase64(file) {
+            return new Promise((resolve, reject) => {
+                if (!file) {
+                    resolve(null);
+                    return;
+                }
+                const reader = new FileReader();
+                reader.onload = () => {
+                    resolve({
+                        name: file.name,
+                        type: file.type,
+                        size: file.size,
+                        data: reader.result.split(',')[1]
+                    });
+                };
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+            });
+        }
+
+        async function handleSubmit() {
+            const emailInput = document.getElementById('clientEmail');
+            if (!emailInput.value.trim() || !emailInput.value.includes('@')) {
+                emailInput.classList.add('invalid');
+                document.getElementById('emailError').classList.add('show');
+                emailInput.focus();
+                return;
+            }
+            emailInput.classList.remove('invalid');
+            document.getElementById('emailError').classList.remove('show');
+
+            const submitBtn = document.querySelector('.submit-btn');
+            const referenceNumber = generateReferenceNumber();
+
+            const selectedServiceDetails = [];
+            let totalUSD = 0;
+            selectedServices.forEach(serviceId => {
+                for (const [category, items] of Object.entries(services)) {
+                    const service = items.find(s => s.id === serviceId);
+                    if (service) {
+                        const convertedPrice = Math.round(service.price * currentCurrency.rate);
+                        selectedServiceDetails.push({
+                            category: category,
+                            id: service.id,
+                            name: service.name,
+                            priceUSD: service.price,
+                            priceConverted: convertedPrice,
+                            currency: currentCurrency.code
+                        });
+                        totalUSD += service.price;
+                    }
+                }
+            });
+
+            const totalConverted = Math.round(totalUSD * currentCurrency.rate);
+
+            let daysUntilDue = '';
+            const completionDate = document.getElementById('completionDate').value;
+            if (completionDate) {
+                const selected = new Date(completionDate);
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+                daysUntilDue = Math.ceil((selected - today) / (1000 * 60 * 60 * 24));
+            }
+
+            const file1 = document.getElementById('file1').files[0];
+            const file2 = document.getElementById('file2').files[0];
+            const file3 = document.getElementById('file3').files[0];
+
+            try {
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = `
+                    <svg class="spinner" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10" stroke-dasharray="32" stroke-dashoffset="32">
+                            <animate attributeName="stroke-dashoffset" dur="1s" values="32;0" repeatCount="indefinite"/>
+                        </circle>
+                    </svg>
+                    Submitting...
+                `;
+
+                const [file1Data, file2Data, file3Data] = await Promise.all([
+                    fileToBase64(file1),
+                    fileToBase64(file2),
+                    fileToBase64(file3)
+                ]);
+
+                const formData = {
+                    reference: referenceNumber,
+                    timestamp: new Date().toISOString(),
+                    clientName: document.getElementById('clientName').value.trim() || 'N/A',
+                    company: document.getElementById('companyName').value.trim() || 'N/A',
+                    email: document.getElementById('clientEmail').value.trim(),
+                    phone: document.getElementById('clientPhone').value.trim() || 'N/A',
+                    country: document.getElementById('clientCountry').value,
+                    currency: currentCurrency.code,
+                    currencySymbol: currentCurrency.symbol,
+                    servicesJSON: JSON.stringify(selectedServiceDetails),
+                    servicesList: selectedServiceDetails.map(s => s.name).join(', '),
+                    totalUSD: totalUSD,
+                    totalLocal: `${currentCurrency.symbol}${totalConverted.toLocaleString()}`,
+                    projectDescription: document.getElementById('projectDescription').value.trim() || 'N/A',
+                    completionDate: completionDate || 'N/A',
+                    daysUntilDue: daysUntilDue === '' ? 'N/A' : daysUntilDue,
+                    budget: document.getElementById('budget').value || 'N/A',
+                    paymentMethod: document.querySelector('input[name="paymentMethod"]:checked')?.value || 'bank',
+                    file1: file1Data,
+                    file1Comment: document.getElementById('fileComment1').value.trim() || '',
+                    file2: file2Data,
+                    file2Comment: document.getElementById('fileComment2').value.trim() || '',
+                    file3: file3Data,
+                    file3Comment: document.getElementById('fileComment3').value.trim() || ''
+                };
+
+                google.script.run
+                    .withSuccessHandler(function(response) {
+                        if (response.success) {
+                            showSuccess(referenceNumber);
+                        } else {
+                            alert('Error: ' + response.error);
+                            resetSubmitButton();
+                        }
+                    })
+                    .withFailureHandler(function(error) {
+                        console.error('Submission error:', error);
+                        alert('Failed to submit. Please try again.');
+                        resetSubmitButton();
+                    })
+                    .processFormSubmission(formData);
+
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Failed to submit. Please try again.');
+                resetSubmitButton();
+            }
+        }
+
+        function resetSubmitButton() {
+            const submitBtn = document.querySelector('.submit-btn');
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = `
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                    <line x1="22" y1="2" x2="11" y2="13"></line>
+                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                </svg>
+                Submit Request
+            `;
+        }
+
+        function showSuccess(referenceNumber) {
+            const form = document.getElementById('serviceForm');
+            const successMessage = document.getElementById('successMessage');
+            const confirmationRef = document.getElementById('confirmationRef');
+
+            confirmationRef.textContent = `Reference: ${referenceNumber}`;
+
+            form.style.display = 'none';
+            document.querySelector('.quotation-sidebar').style.display = 'none';
+            document.getElementById('floatingCart').style.display = 'none';
+            successMessage.classList.add('show');
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>

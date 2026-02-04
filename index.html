@@ -1,0 +1,2438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- General Meta Tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Papi Agency ™ - Expert Website Development, SEO, Branding & Digital Marketing</title>
+    <meta name="description" content="Papi Agency ™ offers top-tier digital solutions including full-stack website development, expert SEO strategies, social media management, video editing, and brand development services. Drive business growth with innovative marketing strategies.">
+    
+    <!-- Open Graph Meta Tags for Social Media -->
+    <meta property="og:title" content="Papi Agency ™ - Digital Transformation Experts">
+    <meta property="og:description" content="Unlock your brand’s potential with Papi Agency ™. Our services include custom web development, SEO, social media management, email marketing, and cutting-edge digital branding strategies.">
+    <meta property="og:image" content="URL_of_your_image_here.jpg">
+    <meta property="og:url" content="https://www.papiagency.website">
+    <meta property="og:type" content="website">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Papi Agency ™ - Digital Marketing & Web Development Experts">
+    <meta name="twitter:description" content="Partner with Papi Agency ™ for professional web development, SEO, social media management, and brand optimization services that deliver measurable results.">
+    <meta name="twitter:image" content="URL_of_your_image_here.jpg">
+    
+    <!-- Robots Meta Tag -->
+    <meta name="robots" content="index, follow">
+
+    <!-- Favicon Link - Updated to 'Papi Agency ™.svg' -->
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+    <!-- Google Fonts Optimization -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap">
+
+    <!-- Font Awesome for Social Media Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Structured Data: Schema Markup for Local Business & Service -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Papi Agency ™",
+      "url": "https://www.papiagency.website",
+      "logo": "URL_of_your_logo_here.jpg",
+      "sameAs": [
+        "https://www.facebook.com/papiagency",
+        "https://twitter.com/papiagency",
+        "https://www.linkedin.com/company/papiagency"
+      ],
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+1-800-123-4567",
+        "contactType": "customer service",
+        "areaServed": "US",
+        "availableLanguage": "English"
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "123 Business St.",
+        "addressLocality": "City",
+        "addressRegion": "State",
+        "postalCode": "12345",
+        "addressCountry": "US"
+      }
+    }
+    </script>
+
+    <!-- Clerk.js for Authentication (if needed) -->
+    <script src="https://cdn.jsdelivr.net/npm/@clerk/clerk-js@latest/dist/clerk.browser.js"></script>
+
+    <!-- Preload Key Resources for Faster Load Time -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" as="style">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" as="font" type="font/woff2" crossorigin="anonymous">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Added dark mode CSS variables */
+            --bg-primary: #ffffff;
+            --bg-secondary: rgba(99, 102, 241, 0.05);
+            --text-primary: #1a1a2e;
+            --text-secondary: #6b7280;
+            --accent: #6366f1;
+            --accent-hover: #4f46e5;
+            --secondary: #ec4899;
+            --border: #e5e7eb;
+            --card-bg: #ffffff;
+        }
+
+        /* Dark mode variables */
+        [data-theme="dark"] {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: rgba(99, 102, 241, 0.1);
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --accent: #818cf8;
+            --accent-hover: #6366f1;
+            --secondary: #f472b6;
+            --border: #1e293b;
+            --card-bg: #1a1a2e;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            /* Added galaxy background */
+            position: relative;
+        }
+
+        /* Animated galaxy background */
+        .galaxy-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
+            overflow: hidden;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        .shooting-star {
+            position: absolute;
+            height: 2px;
+            background: linear-gradient(90deg, #fff, transparent);
+            animation: shoot 3s linear infinite;
+        }
+
+        @keyframes shoot {
+            0% {
+                transform: translateX(0) translateY(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(-1000px) translateY(500px);
+                opacity: 0;
+            }
+        }
+
+        [data-theme="light"] .galaxy-background {
+            opacity: 0;
+        }
+
+        /* Added common accent color for elements that need visibility in both themes */
+        .theme-safe-text {
+            color: var(--accent) !important;
+        }
+
+        [data-theme="dark"] .galaxy-background {
+            opacity: 1;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            /* Made nav background themeable */
+            background: var(--card-bg);
+            opacity: 0.98;
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+        }
+
+        .logo {
+            font-size: 1.75rem;
+            font-weight: 700;
+            font-family: 'Space Grotesk', sans-serif;
+            background: linear-gradient(135deg, var(--accent), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        /* Added dark mode toggle button */
+        .dark-mode-toggle {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1.1rem;
+        }
+
+        .dark-mode-toggle:hover {
+            background: var(--accent);
+            color: white;
+            transform: rotate(180deg);
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1.5rem;
+            border-radius: 0.5rem;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 0.875rem;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--border);
+            color: var(--text-primary);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .btn-secondary {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #db2777;
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            padding-top: 5rem;
+        }
+
+        .video-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .video-background video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 1;
+        }
+
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.9), rgba(255,255,255,0.7), rgba(255,255,255,1));
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 3rem 0;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(236, 72, 153, 0.1));
+            color: var(--accent);
+            border-radius: 2rem;
+            font-size: 0.875rem;
+            margin-bottom: 1.5rem;
+            animation: pulse 2s infinite;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+            background: linear-gradient(135deg, var(--accent), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero h2 { /* Added style for hero h2 elements */
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-large {
+            padding: 1rem 2.5rem;
+            font-size: 1rem;
+        }
+
+        .btn-bounce {
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            font-family: 'Space Grotesk', sans-serif;
+            background: linear-gradient(135deg, var(--accent), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        /* Sections */
+        section {
+            padding: 5rem 0;
+        }
+
+        .section-bg {
+            background: var(--bg-secondary);
+        }
+
+        .section-header {
+            max-width: 700px;
+            margin: 0 auto 3rem;
+            text-align: center;
+        }
+
+        .section-header h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+        }
+
+        /* Grid Layouts */
+        .grid {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .grid-2 {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+
+        .grid-3 {
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        }
+
+        .grid-4 {
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        }
+
+        /* Cards */
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 1rem;
+            padding: 2rem;
+            transition: all 0.3s;
+        }
+
+        .card:hover {
+            border-color: var(--accent);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.1);
+        }
+
+        .card-icon {
+            width: 3.5rem;
+            height: 3.5rem;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(236, 72, 153, 0.1));
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .card p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            line-height: 1.7;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tag {
+            padding: 0.25rem 0.75rem;
+            background: var(--bg-secondary);
+            border-radius: 1rem;
+            font-size: 0.75rem;
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        /* Team Cards */
+        .team-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 1rem;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .team-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.1);
+        }
+
+        .team-image {
+            width: 100%;
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(236, 72, 153, 0.1));
+            overflow: hidden;
+        }
+
+        .team-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .team-card:hover .team-image img {
+            transform: scale(1.05);
+        }
+
+        .team-info {
+            padding: 1.5rem;
+        }
+
+        .team-name {
+            font-size: 1.25rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .team-role {
+            color: var(--accent);
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .team-bio {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .social-link {
+            width: 2.5rem;
+            height: 2.5rem;
+            background: var(--bg-secondary);
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .social-link:hover {
+            background: var(--accent);
+            color: white;
+        }
+
+        /* Portfolio Cards */
+        .portfolio-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 1rem;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .portfolio-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.1);
+        }
+
+        .portfolio-image {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16/9;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(236, 72, 153, 0.1));
+            overflow: hidden;
+        }
+
+        .portfolio-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .portfolio-card:hover .portfolio-image img {
+            transform: scale(1.05);
+        }
+
+        .portfolio-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+            display: flex;
+            align-items: flex-end;
+            padding: 1.5rem;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .portfolio-card:hover .portfolio-overlay {
+            opacity: 1;
+        }
+
+        .portfolio-category {
+            background: var(--accent);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .portfolio-info {
+            padding: 1.5rem;
+        }
+
+        .portfolio-title {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+            transition: color 0.3s;
+        }
+
+        .portfolio-card:hover .portfolio-title {
+            color: var(--accent);
+        }
+
+        .portfolio-description {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .portfolio-stats {
+            display: flex;
+            gap: 1.5rem;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .portfolio-stat {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        /* Pricing Cards */
+        .pricing-card {
+            background: var(--card-bg);
+            border: 2px solid var(--border);
+            border-radius: 1rem;
+            padding: 2.5rem;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .pricing-card.featured {
+            border-color: var(--accent);
+            box-shadow: 0 10px 40px rgba(99, 102, 241, 0.2);
+            transform: scale(1.05);
+        }
+
+        .pricing-badge {
+            position: absolute;
+            top: -0.75rem;
+            right: 2rem;
+            background: linear-gradient(135deg, var(--accent), var(--secondary));
+            color: white;
+            padding: 0.25rem 1rem;
+            border-radius: 1rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .pricing-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .pricing-name {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .pricing-price {
+            font-size: 3rem;
+            font-weight: 700;
+            font-family: 'Space Grotesk', sans-serif;
+            background: linear-gradient(135deg, var(--accent), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .pricing-period {
+            font-size: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .pricing-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .pricing-features li {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .pricing-features li:last-child {
+            border-bottom: none;
+        }
+
+        .pricing-features i {
+            color: var(--accent);
+        }
+
+        /* Testimonials */
+        .testimonial-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 1rem;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .quote-icon {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            font-size: 2.5rem;
+            color: rgba(99, 102, 241, 0.1);
+        }
+
+        .rating {
+            display: flex;
+            gap: 0.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .rating .star { /* Updated to target rating's star */
+            color: #fbbf24;
+            font-size: 1rem;
+        }
+
+        .testimonial-text {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+            font-size: 1rem;
+        }
+
+        .testimonial-author {
+            border-top: 1px solid var(--border);
+            padding-top: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .author-avatar {
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 1.25rem;
+        }
+
+        .author-details {
+            flex: 1;
+        }
+
+        .author-name {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .author-info {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        /* Contact Form */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 3rem;
+        }
+
+        @media (min-width: 768px) {
+            .contact-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .contact-item {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .contact-icon {
+            width: 3rem;
+            height: 3rem;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(236, 72, 153, 0.1));
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+            flex-shrink: 0;
+        }
+
+        .contact-details h4 {
+            font-size: 1rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .contact-details a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .contact-details a:hover {
+            color: var(--accent);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 0.875rem;
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        /* Video container styling for contact section */
+        .video-container {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .video-container video {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Responsive iframe styling */
+        .form-iframe-container {
+            position: relative;
+            width: 100vw; /* Changed from 100% to 100vw */
+            margin-left: calc(-50vw + 50%); /* Changed from original value to center */
+            overflow: hidden;
+            /* Removed padding, borders, border-radius as per update */
+        }
+
+        .form-iframe-container iframe {
+            width: 100%;
+            height: 1100px; /* Changed from original value */
+            border: none;
+            display: block; /* Changed from original value */
+        }
+
+        /* Removed responsive media queries - iframe just fills its allocated space */
+
+
+        /* Footer */
+        footer {
+            background: var(--text-primary);
+            color: white;
+            padding: 3rem 0 1.5rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h4 {
+            margin-bottom: 1rem;
+            font-size: 1.125rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 1.5rem;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.875rem;
+        }
+
+        /* Floating Social Icons */
+        /* Replaced floating social icons with expandable FAB button */
+        .floating-social-fab {
+            position: fixed;
+            right: 1.5rem;
+            bottom: 5rem;
+            z-index: 999;
+        }
+
+/* Floating Action Button (FAB) Toggle */
+.fab-toggle {
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.5), rgba(234, 82, 153, 0.5)); /* Transparent gradient */
+    color: white;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    position: fixed;
+    bottom: 7rem; /* Moved up from 2rem to 3rem */
+    right: 1rem;
+    z-index: 10;
+}
+
+.fab-toggle:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 25px rgba(99, 102, 241, 0.5);
+}
+
+.fab-toggle.active {
+    transform: rotate(45deg);
+}
+
+
+        .fab-menu {
+            position: absolute;
+            bottom: 4.5rem;
+            right: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+        }
+
+        .fab-menu.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .fab-menu .social-icon {
+            width: 2.75rem;
+            height: 2.75rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.3s;
+            position: relative;
+            border: 1px solid var(--border);
+            background: var(--card-bg);
+            color: var(--text-primary);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            font-size: 1.1rem;
+        }
+
+        .fab-menu .social-icon:hover {
+            transform: scale(1.15) translateX(-5px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .fab-menu .social-icon.whatsapp {
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            color: white;
+            border: none;
+        }
+
+        .fab-menu .social-icon.telegram {
+            background: linear-gradient(135deg, #0088cc, #005f8c);
+            color: white;
+            border: none;
+        }
+
+        .fab-menu .social-icon .tooltip {
+            position: absolute;
+            right: 100%;
+            margin-right: 0.75rem;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            padding: 0.4rem 0.6rem;
+            border-radius: 0.4rem;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+            font-size: 0.75rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .fab-menu .social-icon:hover .tooltip {
+            opacity: 1;
+        }
+
+/* Scroll to Top Button */
+.scroll-top {
+    position: fixed;
+    bottom: 3rem; /* Moved up */
+    right: 2rem;
+    width: 3.5rem;
+    height: 3.5rem;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.6), rgba(234, 82, 153, 0.6)); /* Transparent gradient */
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    transition: all 0.3s;
+    z-index: 998;
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+}
+
+.scroll-top.visible {
+    display: flex;
+}
+
+.scroll-top:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+}
+
+
+        /* Floating Menu */
+        .floating-menu-btn {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            width: 3.5rem;
+            height: 3.5rem;
+            background: white;
+            border: 2px solid var(--border);
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 1001;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 25s;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .floating-menu-btn img {
+            width: 70%;
+            height: 70%;
+            object-fit: contain;
+        }
+
+        .floating-menu-btn:hover {
+            transform: scale(1.05);
+            border-color: var(--accent);
+        }
+
+        .floating-menu-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            display: none;
+            opacity: 5;
+            transition: opacity 0.3s;
+        }
+
+        .floating-menu-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+
+        .floating-menu {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 40%;
+            min-width: 320px;
+            max-width: 500px;
+            height: 100%;
+            background: rgba(170, 211, 58, 0.9); /* Set the opacity to 0.5 */
+            z-index: 1001;
+            transform: translateX(100%);
+            transition: transform 0.9s;
+            padding: 2rem;
+            overflow-y: auto;
+            box-shadow: -4px 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+
+        .floating-menu.active {
+            transform: translateX(0);
+        }
+
+        .menu-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .menu-close {
+            background: rgb(244, 130, 130);
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-primary);
+            transition: color 0.3s;
+        }
+
+        .menu-close:hover {
+            color: var(--accent);
+        }
+
+        .menu-links {
+            list-style: none;
+        }
+
+        .menu-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .menu-links a {
+            display: block;
+            padding: 1rem;
+            color: var(--text-primary);
+            text-decoration: none;
+            border-radius: 0.5rem;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .menu-links a:hover {
+            background: var(--bg-secondary);
+            color: var(--accent);
+        }
+
+        /* Chatbot */
+        .chatbot-btn {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            width: 3.5rem;
+            height: 3.5rem;
+            background: linear-gradient(135deg, var(--accent), var(--secondary));
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            z-index: 997;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+        }
+
+        .chatbot-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+        }
+
+        .chatbot-window {
+            position: fixed;
+            bottom: 6rem;
+            left: 2rem;
+            width: 380px;
+            height: 550px;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 1rem;
+            z-index: 997;
+            display: none;
+            flex-direction: column;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .chatbot-window.active {
+            display: flex;
+        }
+
+        .chatbot-header {
+            padding: 1.25rem;
+            background: linear-gradient(135deg, var(--accent), var(--secondary));
+            color: white;
+            border-radius: 1rem 1rem 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chatbot-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.25rem;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+
+        .chatbot-close:hover {
+            opacity: 0.8;
+        }
+
+        .chatbot-body {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+        }
+
+        .chatbot-message {
+            margin-bottom: 1rem;
+            padding: 0.875rem;
+            border-radius: 0.75rem;
+            max-width: 85%;
+            line-height: 1.5;
+        }
+
+        .chatbot-message.bot {
+            background: var(--bg-secondary);
+            margin-right: auto;
+        }
+
+        .chatbot-message.user {
+            background: linear-gradient(135deg, var(--accent), var(--secondary));
+            color: white;
+            margin-left: auto;
+        }
+
+        .chatbot-input {
+            padding: 1rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .chatbot-input input {
+            flex: 1;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+        }
+
+        .chatbot-input button {
+            padding: 0.75rem 1.25rem;
+            background: linear-gradient(135deg, var(--accent), var(--secondary));
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+
+        .chatbot-input button:hover {
+            opacity: 0.9;
+        }
+
+        /* Mobile Menu Toggle */
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-primary);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .floating-social-fab { /* Adjusted for FAB */
+                right: 0.5rem;
+                bottom: 5rem; /* Adjust as needed */
+            }
+
+            .fab-toggle {
+                width: 3rem;
+                height: 3rem;
+                font-size: 1.2rem;
+            }
+
+            .fab-menu {
+                bottom: 4rem;
+            }
+
+            .fab-menu .social-icon {
+                width: 2.5rem;
+                height: 2.5rem;
+                font-size: 1rem;
+            }
+
+            .floating-menu {
+                width: 85%;
+            }
+
+            .scroll-top {
+                bottom: 1rem;
+                right: 1rem;
+                width: 3rem;
+                height: 3rem;
+            }
+
+            .chatbot-btn {
+                bottom: 7rem;
+                left: 1rem;
+                width: 3rem;
+                height: 3rem;
+            }
+
+            .chatbot-window {
+                left: 1rem;
+                right: 1rem;
+                width: auto;
+                bottom: 5rem;
+            }
+
+            .pricing-card.featured {
+                transform: scale(1);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero h2 { /* Responsive h2 in hero */
+                font-size: 1.25rem;
+            }
+
+            .section-header h2 {
+                font-size: 1.75rem;
+            }
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .floating-menu {
+                width: 100%;
+                max-width: unset;
+            }
+        }
+    </style>
+</head>
+<body data-theme="light">
+    <!-- Added animated galaxy background -->
+    <div class="galaxy-background" id="galaxyBg"></div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <div class="logo">Papi Agency ™</div>
+            <ul class="nav-links">
+                <li><a href="#services">Services</a></li>
+                <li><a href="#portfolio">Portfolio</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#team">Team</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <!-- Added dark mode toggle button -->
+                <li>
+                    <button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle dark mode">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                </li>
+                <li class="auth-buttons">
+                    <a href="#" class="btn btn-outline" id="sign-in-btn">Sign In</a>
+                    <a href="#" class="btn btn-primary" id="sign-up-btn" style="color: yellow;">Sign Up</a>
+                </li>
+            </ul>
+            <button class="mobile-menu-toggle" onclick="toggleFloatingMenu()" aria-label="Toggle menu">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="video-background">
+            <video autoplay loop muted playsinline>
+                <source src="placeholder.mp4" type="video/mp4">
+            </video>
+        </div>
+        <div class="video-overlay"></div>
+        
+        <div class="container hero-content">
+            <div class="badge">🚀 Propell Your Brand <span style="font-weight: bold;">Now!</span></div>
+
+                <h1>Websites Design</h1>
+                <h2>💬 Social Media</h2>
+                <h2>Content Creation</h2>
+                <h2>🛒 e-Commerce</h2>
+                <h2>🎥 Videography</h2>
+                <h2>📽️ Video Editing</h2>
+                <h2>Audio Engineering</h2>
+                <h2>🎨 Graphic Design</h2>
+
+            <p>Transform Your Business with Proven Digital Strategies</p>
+            
+            <div class="hero-buttons">
+                <a href="#contact" class="btn btn-primary btn-large btn-bounce">
+                    Get Started <i class="fas fa-arrow-right"></i>
+                </a>
+                <a href="#portfolio" class="btn btn-outline btn-large">
+                    <i class="fas fa-briefcase"></i> View Our Work
+                </a>
+            </div>
+
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-number">500+</div>
+                    <div class="stat-label">Brands Transformed</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">10M+</div>
+                    <div class="stat-label">Social Reach</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">98%</div>
+                    <div class="stat-label">Client Satisfaction</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">24/7</div>
+                    <div class="stat-label">Support Available</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="section-bg">
+        <div class="container">
+            <div class="section-header">
+                <h2>Our Services</h2>
+                <p>Comprehensive digital marketing solutions tailored to your brand's unique needs and goals.</p>
+            </div>
+
+            <div class="grid grid-3">
+                <div class="card">
+                    <div class="card-icon"><i class="fab fa-instagram"></i></div>
+                    <h3>Social Media Marketing</h3>
+                    <p>Strategic social media campaigns that engage your audience, build community, and drive conversions across all major platforms.</p>
+                    <div class="tags">
+                        <span class="tag">Instagram</span>
+                        <span class="tag">Facebook</span>
+                        <span class="tag">TikTok</span>
+                        <span class="tag">LinkedIn</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-laptop-code"></i></div>
+                    <h3>Website Development</h3>
+                    <p>Custom, responsive websites that look stunning and perform flawlessly. From landing pages to full e-commerce solutions.</p>
+                    <div class="tags">
+                        <span class="tag">Responsive</span>
+                        <span class="tag">E-commerce</span>
+                        <span class="tag">SEO Ready</span>
+                        <span class="tag">Fast</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-palette"></i></div>
+                    <h3>Digital Branding</h3>
+                    <p>Create a memorable brand identity that resonates with your audience. Logo design, brand guidelines, and visual storytelling.</p>
+                    <div class="tags">
+                        <span class="tag">Logo Design</span>
+                        <span class="tag">Brand Guide</span>
+                        <span class="tag">Visual Identity</span>
+                        <span class="tag">Style Guide</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-search"></i></div>
+                    <h3>SEO Optimization</h3>
+                    <p>Boost your online visibility with data-driven SEO strategies. Rank higher, get found, and dominate your market.</p>
+                    <div class="tags">
+                        <span class="tag">Keyword Research</span>
+                        <span class="tag">On-Page SEO</span>
+                        <span class="tag">Link Building</span>
+                        <span class="tag">Analytics</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-pen-fancy"></i></div>
+                    <h3>Content Creation</h3>
+                    <p>Compelling content that tells your story. From blog posts to video scripts, we create content that converts.</p>
+                    <div class="tags">
+                        <span class="tag">Copywriting</span>
+                        <span class="tag">Video Scripts</span>
+                        <span class="tag">Blog Posts</span>
+                        <span class="tag">Social Copy</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-chart-line"></i></div>
+                    <h3>Analytics & Reporting</h3>
+                    <p>Data-driven insights that inform strategy. Track performance, measure ROI, and optimize for continuous growth.</p>
+                    <div class="tags">
+                        <span class="tag">Google Analytics</span>
+                        <span class="tag">Social Insights</span>
+                        <span class="tag">ROI Tracking</span>
+                        <span class="tag">Reports</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio">
+        <div class="container">
+            <div class="section-header">
+                <h2>Our Portfolio</h2>
+                <p>Real results for real businesses. See how we've helped brands achieve their digital marketing goals.</p>
+            </div>
+
+            <div class="grid grid-3">
+                <div class="portfolio-card">
+                    <div class="portfolio-image">
+                        <img src="placeholder.svg?height=360&width=640" alt="Fashion Brand Website">
+                        <div class="portfolio-overlay">
+                            <span class="portfolio-category">Website Development</span>
+                        </div>
+                    </div>
+                    <div class="portfolio-info">
+                        <h3 class="portfolio-title">Luxe Fashion Brand</h3>
+                        <p class="portfolio-description">Complete e-commerce website redesign with 300% increase in online sales.</p>
+                        <div class="portfolio-stats">
+                            <span class="portfolio-stat"><i class="fas fa-arrow-up"></i> 300% Sales</span>
+                            <span class="portfolio-stat"><i class="fas fa-users"></i> 50K Visitors</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-card">
+                    <div class="portfolio-image">
+                        <img src="placeholder.svg?height=360&width=640" alt="Social Media Campaign">
+                        <div class="portfolio-overlay">
+                            <span class="portfolio-category">Social Media</span>
+                        </div>
+                    </div>
+                    <div class="portfolio-info">
+                        <h3 class="portfolio-title">FitLife Wellness</h3>
+                        <p class="portfolio-description">Instagram campaign that grew followers by 500% and engagement by 800%.</p>
+                        <div class="portfolio-stats">
+                            <span class="portfolio-stat"><i class="fas fa-heart"></i> 800% Engagement</span>
+                            <span class="portfolio-stat"><i class="fas fa-user-plus"></i> 500% Growth</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-card">
+                    <div class="portfolio-image">
+                        <img src="placeholder.svg?height=360&width=640" alt="Brand Identity">
+                        <div class="portfolio-overlay">
+                            <span class="portfolio-category">Branding</span>
+                        </div>
+                    </div>
+                    <div class="portfolio-info">
+                        <h3 class="portfolio-title">TechStart Inc.</h3>
+                        <p class="portfolio-description">Complete brand identity redesign for a tech startup, including logo and guidelines.</p>
+                        <div class="portfolio-stats">
+                            <span class="portfolio-stat"><i class="fas fa-award"></i> Award Winning</span>
+                            <span class="portfolio-stat"><i class="fas fa-rocket"></i> Series A Funded</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-card">
+                    <div class="portfolio-image">
+                        <img src="placeholder.svg?height=360&width=640" alt="Restaurant Website">
+                        <div class="portfolio-overlay">
+                            <span class="portfolio-category">Website Development</span>
+                        </div>
+                    </div>
+                    <div class="portfolio-info">
+                        <h3 class="portfolio-title">Bella Cucina Restaurant</h3>
+                        <p class="portfolio-description">Modern restaurant website with online ordering system and reservation booking.</p>
+                        <div class="portfolio-stats">
+                            <span class="portfolio-stat"><i class="fas fa-utensils"></i> 200+ Orders/Day</span>
+                            <span class="portfolio-stat"><i class="fas fa-star"></i> 4.9 Rating</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-card">
+                    <div class="portfolio-image">
+                        <img src="placeholder.svg?height=360&width=640" alt="TikTok Campaign">
+                        <div class="portfolio-overlay">
+                            <span class="portfolio-category">Social Media</span>
+                        </div>
+                    </div>
+                    <div class="portfolio-info">
+                        <h3 class="portfolio-title">BeautyGlow Cosmetics</h3>
+                        <p class="portfolio-description">Viral TikTok campaign reaching 5M+ views and driving massive product sales.</p>
+                        <div class="portfolio-stats">
+                            <span class="portfolio-stat"><i class="fas fa-eye"></i> 5M+ Views</span>
+                            <span class="portfolio-stat"><i class="fas fa-fire"></i> Viral</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-card">
+                    <div class="portfolio-image">
+                        <img src="placeholder.svg?height=360&width=640" alt="Corporate Branding">
+                        <div class="portfolio-overlay">
+                            <span class="portfolio-category">Branding</span>
+                        </div>
+                    </div>
+                    <div class="portfolio-info">
+                        <h3 class="portfolio-title">Global Finance Corp</h3>
+                        <p class="portfolio-description">Professional rebrand for a financial services company, establishing trust and authority.</p>
+                        <div class="portfolio-stats">
+                            <span class="portfolio-stat"><i class="fas fa-building"></i> Enterprise</span>
+                            <span class="portfolio-stat"><i class="fas fa-globe"></i> Global</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="section-bg">
+        <div class="container">
+            <div class="section-header">
+                <h2>Pricing Plans</h2>
+                <p>Choose the perfect plan for your business. Flexible packages designed to deliver maximum value.</p>
+            </div>
+
+            <div class="grid grid-2">
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3 class="pricing-name">Professional</h3>
+                        <div class="pricing-price">$2,499<span class="pricing-period">/month</span></div>
+                    </div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> Social Media Management (3 platforms)</li>
+                        <li><i class="fas fa-check"></i> 12 Posts per month</li>
+                        <li><i class="fas fa-check"></i> Basic Website (5 pages)</li>
+                        <li><i class="fas fa-check"></i> Logo Design</li>
+                        <li><i class="fas fa-check"></i> Brand Guidelines</li>
+                        <li><i class="fas fa-check"></i> Monthly Analytics Report</li>
+                        <li><i class="fas fa-check"></i> Email Support</li>
+                        <li><i class="fas fa-check"></i> 2 Revisions per deliverable</li>
+                    </ul>
+                    <a href="#contact" class="btn btn-outline" style="width: 100%;">Get Started</a>
+                </div>
+
+                <div class="pricing-card featured">
+                    <div class="pricing-badge">Most Popular</div>
+                    <div class="pricing-header">
+                        <h3 class="pricing-name">Premium</h3>
+                        <div class="pricing-price">$4,999<span class="pricing-period">/month</span></div>
+                    </div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> Social Media Management (All platforms)</li>
+                        <li><i class="fas fa-check"></i> 24 Posts per month + Stories</li>
+                        <li><i class="fas fa-check"></i> Advanced Website (Unlimited pages)</li>
+                        <li><i class="fas fa-check"></i> Complete Brand Identity Package</li>
+                        <li><i class="fas fa-check"></i> SEO Optimization</li>
+                        <li><i class="fas fa-check"></i> Content Creation (Blog + Video)</li>
+                        <li><i class="fas fa-check"></i> Weekly Analytics Reports</li>
+                        <li><i class="fas fa-check"></i> Priority 24/7 Support</li>
+                        <li><i class="fas fa-check"></i> Unlimited Revisions</li>
+                        <li><i class="fas fa-check"></i> Dedicated Account Manager</li>
+                        <li><i class="fas fa-check"></i> Paid Ads Management ($1000 ad spend included)</li>
+                    </ul>
+                    <a href="#contact" class="btn btn-primary" style="width: 100%;">Get Started</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section id="team">
+        <div class="container">
+            <div class="section-header">
+                <h2>Meet Our Team</h2>
+                <p>Creative minds and strategic thinkers dedicated to your brand's success.</p>
+            </div>
+
+            <div class="grid grid-4">
+                <div class="team-card">
+                    <div class="team-image">
+                        <img src="placeholder.svg?height=400&width=400" alt="Alex Rivera">
+                    </div>
+                    <div class="team-info">
+                        <h3 class="team-name">Alex Rivera</h3>
+                        <div class="team-role">Creative Director</div>
+                        <p class="team-bio">15+ years crafting award-winning campaigns for Fortune 500 brands.</p>
+                        <div class="social-links">
+                            <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="team-card">
+                    <div class="team-image">
+                        <img src="placeholder.svg?height=400&width=400" alt="Sarah Chen">
+                    </div>
+                    <div class="team-info">
+                        <h3 class="team-name">Sarah Chen</h3>
+                        <div class="team-role">Lead Developer</div>
+                        <p class="team-bio">Full-stack wizard specializing in high-performance web applications.</p>
+                        <div class="social-links">
+                            <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="team-card">
+                    <div class="team-image">
+                        <img src="placeholder.svg?height=400&width=400" alt="Marcus Johnson">
+                    </div>
+                    <div class="team-info">
+                        <h3 class="team-name">Marcus Johnson</h3>
+                        <div class="team-role">Social Media Strategist</div>
+                        <p class="team-bio">Viral content creator with 50M+ combined reach across platforms.</p>
+                        <div class="social-links">
+                            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-tiktok"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="team-card">
+                    <div class="team-image">
+                        <img src="placeholder.svg?height=400&width=400" alt="Emma Williams">
+                    </div>
+                    <div class="team-info">
+                        <h3 class="team-name">Emma Williams</h3>
+                        <div class="team-role">Brand Designer</div>
+                        <p class="team-bio">Award-winning designer creating memorable visual identities.</p>
+                        <div class="social-links">
+                            <a href="#" class="social-link"><i class="fab fa-dribbble"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-behance"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="section-bg">
+        <div class="container">
+            <div class="section-header">
+                <h2>Client Success Stories</h2>
+                <p>Don't just take our word for it. Hear from businesses we've helped transform.</p>
+            </div>
+
+            <div class="grid grid-3">
+                <div class="testimonial-card">
+                    <i class="fas fa-quote-right quote-icon"></i>
+                    <div class="rating">
+                        <i class="fas fa-star star"></i>
+                        <i class="fas fa-star star"></i>
+                        <i class="fas fa-star star"></i>
+                        <i class="fas fa-star star"></i>
+                        <i class="fas fa-star star"></i>
+                    </div>
+                    <p class="testimonial-text">Papi Agency ™ transformed our social media presence completely. Our engagement increased by 800% in just 3 months, and we're seeing real ROI from our campaigns.</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">JM</div>
+                        <div class="author-details">
+                            <div class="author-name">Jessica Martinez</div>
+                            <div class="author-info">CEO, FitLife Wellness</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <i class="fas fa-quote-right quote-icon"></i>
+                    <div class="rating">
+                        <i class="fas fa-star star"></i>
+                        <i class="fas fa-star star"></i>
+                        <i class="fas fa-star star"></i>
+                        <i class="fas fa-star star"></i>
+                        <i class="fas fa-star star"></i>
+                    </div>
+                    <p class="testimonial-text">The website they built for us is absolutely stunning and performs flawlessly. Our online sales tripled within the first month of launch!</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">DK</div>
+                        <div class="author-details">
+                            <div class="author-name">David Kim</div>
+                            <div class="author-info">Founder, Luxe Fashion</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <i class="fas fa-quote-right quote-icon"></i>
+                    <div class="rating">
+                        <i class="fas fa-star star"></i>
+                        <i class="fas fa-star star"></i>
+                        <i class="fas fa-star star"></i>
+                        <i class="fas fa-star star"></i>
+                        <i class="fas fa-star star"></i>
+                    </div>
+                    <p class="testimonial-text">Professional, creative, and results-driven. Papi Agency ™ helped us establish a strong brand identity that resonates with our target audience.</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">SP</div>
+                        <div class="author-details">
+                            <div class="author-name">Sophia Patel</div>
+                            <div class="author-info">CMO, TechStart Inc.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <i class="fas fa-quote-right quote-icon"></i>
+                    <div class="rating">
+                        <i class="fas fa-star star"></i>
+                        <i class="fas fa-star star"></i>
+                        <i class="fas fa-star star"></i>
+                        <i class="fas fa-star star"></i>
+                        <i class="fas fa-star star"></i>
+                    </div>
+                    <p class="testimonial-text">Their TikTok campaign went viral and brought us thousands of new customers. The ROI has been incredible. Highly recommend!</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">LT</div>
+                        <div class="author-details">
+                            <div class="author-name">Lisa Thompson</div>
+                            <div class="author-info">Owner, BeautyGlow Cosmetics</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <i class="fas fa-quote-right quote-icon"></i>
+                    <div class="rating">
+                        <i class="fas fa-star star"></i>
+                        <i class="fas fa-star star"></i>
+                        <i class="fas fa-star star"></i>
+                        <i class="fas fa-star star"></i>
+                        <i class="fas fa-star star"></i>
+                    </div>
+                    <p class="testimonial-text">Best marketing agency we've worked with. They understand our business and consistently deliver exceptional results. True partners in our growth.</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">MR</div>
+                        <div class="author-details">
+                            <div class="author-name">Michael Rodriguez</div>
+                            <div class="author-info">Director, Bella Cucina</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <i class="fas fa-quote-right quote-icon"></i>
+                    <div class="rating">
+                        <i class="fas fa-star star"></i>
+                        <i class="fas fa-star star"></i>
+                        <i class="fas fa-star star"></i>
+                        <i class="fas fa-star star"></i>
+                        <i class="fas fa-star star"></i>
+                    </div>
+                    <p class="testimonial-text">The rebrand they created for us positioned us as industry leaders. Our brand now commands respect and trust in the market.</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">RW</div>
+                        <div class="author-details">
+                            <div class="author-name">Robert Wilson</div>
+                            <div class="author-info">VP Marketing, Global Finance</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Moved contact section with video and form at bottom before footer -->
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="container">
+            <!-- Added video container -->
+            <div class="video-container">
+                <video autoplay loop muted playsinline>
+                    <source src="/placeholder.svg?height=600&width=800" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+
+            <div class="section-header">
+                <h2>Let's Build Something Amazing</h2>
+                <p>Ready to transform your brand? Tell us about your project and let's create something extraordinary together.</p>
+            </div>
+
+            <div class="contact-grid">
+                <div>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h4>Email</h4>
+                                <a href="mailto:hello@papiagency.com">hello@papiagency.com</a>
+                            </div>
+                        </div>
+
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h4>Phone</h4>
+                                <a href="tel:+1234567890">+1 (234) 567-890</a>
+                            </div>
+                        </div>
+
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h4>Office</h4>
+                                <p style="color: var(--text-secondary); margin: 0;">123 Creative Street<br>Marketing City, MC 12345</p>
+                            </div>
+                        </div>
+
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h4>Business Hours</h4>
+                                <p style="color: var(--text-secondary); margin: 0;">Mon - Fri: 9AM - 6PM<br>Sat - Sun: Closed</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Updated iframe with responsive container -->
+                <div class="card">
+    <h3 style="margin-bottom: 1.5rem;">Submit Your Project Brief</h3>
+        <video width="100%" controls>
+        <source src="placeholder.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+</div>
+                <div class="card">
+    <h3 style="margin-bottom: 1.5rem;">Submit Your Project Brief</h3>
+        <video width="100%" controls>
+        <source src="placeholder.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+</div>
+
+                <div class="card">
+    <h3 style="margin-bottom: 1.5rem;">Submit Your Project Brief</h3>
+        <video width="100%" controls>
+        <source src="placeholder.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+</div>
+
+            </div>
+        </div>
+    </section>
+                    <div class="form-iframe-container">
+                        <iframe 
+                            src="https://script.google.com/macros/s/AKfycbwRamGC1IxznSK2GpqXe_SX7wRAjDgKvHua6GJFh_JBByeOiSGvQR2NoE2atL9Kd49XFw/exec" 
+                            loading="lazy"
+                            title="Contact Form">
+                        </iframe>
+                    </div>
+
+
+    <!-- Floating Social Icons -->
+    <!-- Replaced floating social icons with expandable FAB button -->
+    <div class="floating-social-fab">
+        <div class="fab-menu" id="fabMenu">
+            <a href="https://wa.me/27730000822" target="_blank" class="social-icon whatsapp" aria-label="WhatsApp">
+                <i class="fab fa-whatsapp"></i>
+                <span class="tooltip">WhatsApp</span>
+            </a>
+            <a href="https://t.me/papiagency" target="_blank" class="social-icon telegram" aria-label="Telegram">
+                <i class="fab fa-telegram"></i>
+                <span class="tooltip">Telegram</span>
+            </a>
+            <a href="#" target="_blank" class="social-icon" aria-label="Facebook">
+                <i class="fab fa-facebook"></i>
+                <span class="tooltip">Facebook</span>
+            </a>
+            <a href="#" target="_blank" class="social-icon" aria-label="Twitter">
+                <i class="fab fa-twitter"></i>
+                <span class="tooltip">Twitter</span>
+            </a>
+            <a href="#" target="_blank" class="social-icon" aria-label="Instagram">
+                <i class="fab fa-instagram"></i>
+                <span class="tooltip">Instagram</span>
+            </a>
+            <a href="#" target="_blank" class="social-icon" aria-label="LinkedIn">
+                <i class="fab fa-linkedin"></i>
+                <span class="tooltip">LinkedIn</span>
+            </a>
+            <a href="#" target="_blank" class="social-icon" aria-label="YouTube">
+                <i class="fab fa-youtube"></i>
+                <span class="tooltip">YouTube</span>
+            </a>
+            <a href="#" target="_blank" class="social-icon" aria-label="TikTok">
+                <i class="fab fa-tiktok"></i>
+                <span class="tooltip">TikTok</span>
+            </a>
+            <a href="#" target="_blank" class="social-icon" aria-label="Pinterest">
+                <i class="fab fa-pinterest"></i>
+                <span class="tooltip">Pinterest</span>
+            </a>
+            <a href="#" target="_blank" class="social-icon" aria-label="Snapchat">
+                <i class="fab fa-snapchat"></i>
+                <span class="tooltip">Snapchat</span>
+            </a>
+            <a href="#" target="_blank" class="social-icon" aria-label="Discord">
+                <i class="fab fa-discord"></i>
+                <span class="tooltip">Discord</span>
+            </a>
+            <a href="#" target="_blank" class="social-icon" aria-label="Reddit">
+                <i class="fab fa-reddit"></i>
+                <span class="tooltip">Reddit</span>
+            </a>
+            <a href="mailto:hello@papiagency.com" class="social-icon" aria-label="Email">
+                <i class="fas fa-envelope"></i>
+                <span class="tooltip">Email</span>
+            </a>
+            <a href="tel:+1234567890" class="social-icon" aria-label="Phone">
+                <i class="fas fa-phone"></i>
+                <span class="tooltip">Phone</span>
+            </a>
+            <a href="#" target="_blank" class="social-icon" aria-label="Dribbble">
+                <i class="fab fa-dribbble"></i>
+                <span class="tooltip">Dribbble</span>
+            </a>
+        </div>
+        <button class="fab-toggle" id="fabToggle" aria-label="Toggle social menu">
+            <i class="fas fa-globe"></i>
+        </button>
+    </div>
+
+    <!-- Scroll to Top Button -->
+    <button class="scroll-top" onclick="scrollToTop()" aria-label="Scroll to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Floating Menu Button -->
+    <button class="floating-menu-btn" onclick="toggleFloatingMenu()" aria-label="Menu">
+        <img src="logo.svg" alt="Papi Agency ™" onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=\'fas fa-bars\' style=\'font-size: 1.5rem;\'></i>'">
+    </button>
+
+    <!-- Floating Menu Overlay -->
+    <div class="floating-menu-overlay" onclick="toggleFloatingMenu()"></div>
+
+    <!-- Floating Menu -->
+    <div class="floating-menu">
+        <div class="menu-header">
+            <h3>Menu</h3>
+            <button class="menu-close" onclick="toggleFloatingMenu()" aria-label="Close menu">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <ul class="menu-links">
+            <li><a href="#" onclick="toggleFloatingMenu()">Home</a></li>
+            <li><a href="#services" onclick="toggleFloatingMenu()">Services</a></li>
+            <li><a href="#portfolio" onclick="toggleFloatingMenu()">Portfolio</a></li>
+            <li><a href="#pricing" onclick="toggleFloatingMenu()">Pricing</a></li>
+            <li><a href="#team" onclick="toggleFloatingMenu()">Our Team</a></li>
+            <li><a href="#testimonials" onclick="toggleFloatingMenu()">Testimonials</a></li>
+            <li><a href="#contact" onclick="toggleFloatingMenu()">Contact</a></li>
+            <li style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border);">
+                <a href="#" onclick="toggleFloatingMenu()" class="btn btn-outline" style="text-align: center; margin-bottom: 0.5rem;">Sign In</a>
+            </li>
+            <li>
+                <a href="#" onclick="toggleFloatingMenu()" class="btn btn-primary" style="text-align: center; color: yellow;">Sign Up</a>
+            </li>
+        </ul>
+        <div id="logo-container">
+  <img src="logo.svg" alt="Website Logo" style="width: 200px; height: 200px;" />
+</div>
+
+    </div>
+
+    <!-- Chatbot Button -->
+    <button class="chatbot-btn" onclick="toggleChatbot()" aria-label="Chat with us">
+        <i class="fas fa-comments"></i>
+    </button>
+
+    <!-- Chatbot Window -->
+    <div class="chatbot-window">
+        <div class="chatbot-header">
+            <div>
+                <h4>Customer Support</h4>
+                <p style="font-size: 0.875rem; opacity: 0.9; margin: 0;">We typically reply in minutes</p>
+            </div>
+            <button class="chatbot-close" onclick="toggleChatbot()" aria-label="Close chat">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="chatbot-body" id="chatbot-body">
+            <div class="chatbot-message bot">
+                👋 Hello! Welcome to Papi Agency ™. How can we help transform your brand today?
+            </div>
+        </div>
+        <div class="chatbot-input">
+            <input type="text" id="chatbot-input" placeholder="Type your message..." onkeypress="handleChatKeypress(event)">
+            <button onclick="sendChatMessage()"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+
+    <script>
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const body = document.body;
+        const icon = darkModeToggle.querySelector('i');
+
+        // Check for saved theme preference, default to dark
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        body.setAttribute('data-theme', savedTheme);
+        updateIcon(savedTheme);
+
+        darkModeToggle.addEventListener('click', () => {
+            const currentTheme = body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            
+            body.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateIcon(newTheme);
+        });
+
+        function updateIcon(theme) {
+            if (theme === 'dark') {
+                icon.className = 'fas fa-sun';
+            } else {
+                icon.className = 'fas fa-moon';
+            }
+        }
+
+        const fabToggle = document.getElementById('fabToggle');
+        const fabMenu = document.getElementById('fabMenu');
+
+        fabToggle.addEventListener('click', () => {
+            fabToggle.classList.toggle('active');
+            fabMenu.classList.toggle('active');
+        });
+
+        // Close FAB menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.floating-social-fab')) {
+                fabToggle.classList.remove('active');
+                fabMenu.classList.remove('active');
+            }
+        });
+
+        function createGalaxy() {
+            const galaxy = document.getElementById('galaxyBg');
+            
+            // Create stars
+            for (let i = 0; i < 200; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                star.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                galaxy.appendChild(star);
+            }
+
+            // Create shooting stars
+            for (let i = 0; i < 5; i++) {
+                const shootingStar = document.createElement('div');
+                shootingStar.className = 'shooting-star';
+                shootingStar.style.top = Math.random() * 50 + '%';
+                shootingStar.style.left = Math.random() * 100 + '%';
+                shootingStar.style.width = Math.random() * 100 + 50 + 'px';
+                shootingStar.style.animationDelay = Math.random() * 5 + 's';
+                shootingStar.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                galaxy.appendChild(shootingStar);
+            }
+        }
+
+        createGalaxy();
+
+        // Scroll to Top
+        window.addEventListener('scroll', function() {
+            const scrollTop = document.querySelector('.scroll-top');
+            if (window.pageYOffset > 300) {
+                scrollTop.classList.add('visible');
+            } else {
+                scrollTop.classList.remove('visible');
+            }
+        });
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Floating Menu
+        function toggleFloatingMenu() {
+            const overlay = document.querySelector('.floating-menu-overlay');
+            const menu = document.querySelector('.floating-menu');
+            overlay.classList.toggle('active');
+            menu.classList.toggle('active');
+        }
+
+        // Chatbot
+        function toggleChatbot() {
+            const chatbot = document.querySelector('.chatbot-window');
+            chatbot.classList.toggle('active');
+        }
+
+        function sendChatMessage() {
+            const input = document.getElementById('chatbot-input');
+            const message = input.value.trim();
+            
+            if (message) {
+                const chatBody = document.getElementById('chatbot-body');
+                
+                // Add user message
+                const userMsg = document.createElement('div');
+                userMsg.className = 'chatbot-message user';
+                userMsg.textContent = message;
+                chatBody.appendChild(userMsg);
+                
+                // Clear input
+                input.value = '';
+                
+                // Scroll to bottom
+                chatBody.scrollTop = chatBody.scrollHeight;
+                
+                // Simulate bot response
+                setTimeout(() => {
+                    const botMsg = document.createElement('div');
+                    botMsg.className = 'chatbot-message bot';
+                    botMsg.textContent = 'Thank you for reaching out! Our team will get back to you shortly. In the meantime, feel free to check out our portfolio or submit a project brief.';
+                    chatBody.appendChild(botMsg);
+                    chatBody.scrollTop = chatBody.scrollHeight;
+                }, 1000);
+            }
+        }
+
+        function handleChatKeypress(event) {
+            if (event.key === 'Enter') {
+                sendChatMessage();
+            }
+        }
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href !== '#' && href !== '') {
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                }
+            });
+        });
+
+        // Clerk.dev Authentication (placeholder - requires actual Clerk setup)
+        document.getElementById('sign-in-btn')?.addEventListener('click', function(e) {
+            e.preventDefault();
+            // Initialize Clerk sign-in
+            console.log('Sign in clicked - Clerk.dev integration needed');
+            alert('Sign In functionality requires Clerk.dev setup. Please configure your Clerk publishable key.');
+        });
+
+        document.getElementById('sign-up-btn')?.addEventListener('click', function(e) {
+            e.preventDefault();
+            // Initialize Clerk sign-up
+            console.log('Sign up clicked - Clerk.dev integration needed');
+            alert('Sign Up functionality requires Clerk.dev setup. Please configure your Clerk publishable key.');
+        });
+    </script>
+</body>
+</html>
